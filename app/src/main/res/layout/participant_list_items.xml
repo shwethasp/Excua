@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:id="@+id/participant_item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:orientation="horizontal"
+    android:layout_marginTop="6dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp">
+
+    <TextView
+        android:id="@+id/participant_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Shwetha S P"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        android:layout_weight="9"
+        android:layout_marginLeft="14dp"
+        android:textColor="@color/dark_green"
+        android:layout_gravity="center"/>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center">
+        <CheckBox
+            android:id="@+id/checkbox_attendance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/dark_green"
+            android:layout_margin="4dp"
+            android:checked="false"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/attended_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Attended"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:layout_margin="4dp"
+            android:textAllCaps="false"
+            android:textColor="@color/gray"
+            android:visibility="gone"/>
+    </FrameLayout>
+
+
+
+    <!--<LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="8"
+        android:layout_marginLeft="10dp"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/participant_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Shwetha S P"
+            android:textAllCaps="false"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:layout_gravity="end"
+        android:layout_marginRight="10dp"
+        android:gravity="end">
+        <CheckBox
+            android:id="@+id/checkbox_attendance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/dark_green"/>
+    </LinearLayout>-->
+
+</LinearLayout>
+</LinearLayout>

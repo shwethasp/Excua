@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">MyExcua</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login_text">Login</string>
+    <string name="signup_text">Sign Up</string>
+    <string name="app">EXCUA</string>
+    <string name="title_activity_events">Events</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    //Today layout
+    <string name="location">Locations</string>
+    <string name="details">Details</string>
+    <string name="title_activity_tomo_attendance">TomoAttendanceActivity</string>
+
+    <string-array name="repetition_array">
+        <item>Once</item>
+        <item>Everyday</item>
+        <item>Weekly Once</item>
+        <item>Monthly Once</item>
+    </string-array>
+
+
+    <string-array name="participants">
+        <item>Varghese Simon</item>
+        <item>Sandeep K S</item>
+        <item>Deepu S</item>
+        <item>Rajesh</item>
+        <item>Shwetha S P</item>
+        <item>Chikku</item>
+        <item>Ajin Joseph</item>
+    </string-array>
+    <string name="title_activity_schedule_activty">ScheduleActivty</string>
+</resources>
