@@ -2,54 +2,42 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/list_item_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/current_time_bar_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/current_time_bar"
-                android:layout_width="10dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:src="@color/dark_green" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/sportimage_layout"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/current_time_bar"
+            android:layout_width="4dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="3dp"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"
-            android:layout_marginTop="3dp">
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:src="@color/dark_green" />
 
-            <ImageView
-                android:id="@+id/sportimage"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:src="@mipmap/ic_swim" />
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/sportimage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/current_time_bar"
+            android:src="@mipmap/ic_swim" />
 
         <LinearLayout
             android:id="@+id/time_layout"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:layout_marginBottom="3dp"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="3dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_toRightOf="@id/sportimage"
             android:orientation="vertical">
 
             <LinearLayout
@@ -61,31 +49,25 @@
 
                 <TextView
                     android:id="@+id/start_time_text"
+                    style="@style/ModerateNormal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10:00 AM"
-                    android:textColor="@color/dark_green"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:text="10:00 am" />
 
                 <TextView
+                    style="@style/ModerateNormal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginRight="2dp"
-                    android:text="to"
-                    android:textColor="@color/dark_green"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:text="to" />
 
                 <TextView
                     android:id="@+id/end_time_text"
+                    style="@style/ModerateNormal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="12:00 PM"
-                    android:textColor="@color/dark_green"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:text="12:00 pm" />
 
             </LinearLayout>
 
@@ -97,83 +79,62 @@
 
                 <ImageView
                     android:id="@+id/people_image"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:layout_gravity="center"
                     android:src="@mipmap/ic_attendees" />
 
                 <TextView
                     android:id="@+id/count_text"
+                    style="@style/ModerateThin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="3dp"
                     android:gravity="center"
-                    android:text="20"
-                    android:textColor="@color/green"
-                    android:textSize="18sp" />
+                    android:text="20" />
 
             </LinearLayout>
         </LinearLayout>
 
-
-        <RelativeLayout
-            android:id="@+id/nextarrow_image_layout"
+        <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="3dp"
-            android:layout_marginEnd="2dp"
-            android:layout_marginRight="2dp"
-            android:layout_marginTop="3dp">
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/nextarrow_image">
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_gravity="center"
-                android:layout_marginRight="5dp"
-                android:layout_toLeftOf="@+id/nextarrow_image">
-                <ImageView
-                    android:id="@+id/location_count_image"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@mipmap/ic_location_pin" />
+            <ImageView
+                android:id="@+id/location_count_image"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/ic_location_pin" />
 
-                <TextView
-                    android:id="@+id/location_count_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="1" />
-            </FrameLayout>
-
-            <!-- <ImageView
-                 android:id="@+id/nextarrow_image"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_alignParentEnd="true"
-                 android:layout_alignParentRight="true"
-                 android:layout_centerInParent="true"
-                 android:layout_gravity="center"
-                 android:layout_marginRight="3dp"
-                 android:src="@android:mipmap/sym_def_app_icon" />-->
             <TextView
-                android:id="@+id/nextarrow_image"
+                android:id="@+id/location_count_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_centerInParent="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="3dp"
-                android:text=">"
-                android:textStyle="normal"
-                android:textSize="20sp" />
-        </RelativeLayout>
+                android:layout_gravity="top|center_horizontal"
+                android:layout_marginTop="2dp"
+                android:gravity="top"
+                android:text="1"
+                android:textColor="@color/white" />
+        </FrameLayout>
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/nextarrow_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginRight="3dp"
+            android:text=">"
+            android:textSize="20sp"
+            android:textStyle="normal" />
 
+    </RelativeLayout>
 
 </LinearLayout>

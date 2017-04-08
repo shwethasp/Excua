@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.varsim.myexcua.R;
@@ -42,8 +43,7 @@ public class DetailListCustomAdapter extends BaseAdapter {
         this.mEndTime = mEndTime;
         this.mLocationNumberImage = mLocationNumberImage;
         /***********  Layout inflator to call external xml layout () **********************/
-        inflater = (LayoutInflater.from(applicationContext));
-
+        inflater = (LayoutInflater)applicationContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);;
     }
 
 
@@ -57,7 +57,7 @@ public class DetailListCustomAdapter extends BaseAdapter {
         TextView end_time_text = (TextView) row.findViewById(R.id.end_time_text);
         TextView count_text = (TextView) row.findViewById(R.id.count_text);
         ImageView location_count_image = (ImageView) row.findViewById(R.id.location_count_image);
-        ImageView nextarrow_image = (ImageView) row.findViewById(R.id.nextarrow_image);
+        TextView nextarrow_image = (TextView) row.findViewById(R.id.nextarrow_image);
       /*
         if (WebSitePage.website_clickedposition == position) {
             website_name.setTextColor(context.getResources().getColor(R.color.white));
@@ -110,8 +110,8 @@ public class DetailListCustomAdapter extends BaseAdapter {
         else
             curent_time_bar.setImageResource(R.color.white);
         sport_image.setImageResource(R.mipmap.ic_swim);
-        start_time_text.setText("10:00 AM");
-        end_time_text.setText("11:23 AM");
+        start_time_text.setText("10:00 am");
+        end_time_text.setText("11:23 am");
         count_text.setText("15");
         location_count_image.setImageResource(R.mipmap.ic_location_pin);
         nextarrow_image.setText(">");

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.varsim.myexcua.R;
@@ -110,8 +111,8 @@ public class DetailListTomorrowCustomAdapter extends BaseAdapter {
         else
             curent_time_bar.setImageResource(R.color.white);
         sport_image.setImageResource(R.mipmap.ic_swim);
-        start_time_text.setText("10:00 AM");
-        end_time_text.setText("11:23 AM");
+        start_time_text.setText("10:00 am");
+        end_time_text.setText("11:23 am");
         count_text.setText("15");
         location_count_image.setImageResource(R.mipmap.ic_location_pin);
         nextarrow_image.setText(">");
