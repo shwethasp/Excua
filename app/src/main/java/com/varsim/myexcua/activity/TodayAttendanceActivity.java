@@ -1,5 +1,6 @@
 package com.varsim.myexcua.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +19,8 @@ import com.varsim.myexcua.model.AttendanceModel;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class TodayAttendanceActivity extends AppCompatActivity {
     ArrayList<AttendanceModel> attendanceModelArray = new ArrayList<AttendanceModel>();
     ListView listView;
@@ -29,7 +32,11 @@ public class TodayAttendanceActivity extends AppCompatActivity {
     EditText inputSearch;
 
 
-//    ArrayAdapter<AttendanceModel> adapter;
+    //    ArrayAdapter<AttendanceModel> adapter;
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,4 +161,6 @@ public class TodayAttendanceActivity extends AppCompatActivity {
         return false;
     }*/
     }
+
+
 }

@@ -31,9 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:text="@string/location"
-                android:textColor="@color/dark_green"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                style="@style/BigBold"/>
 
             <LinearLayout
                 android:id="@+id/date_layout"
@@ -49,24 +47,23 @@
                     android:layout_height="wrap_content"
                     android:paddingRight="5dp"
                     android:text="Monday"
-                    android:textColor="@color/green"
-                    android:textSize="15sp"/>
+                    android:textColor="@color/fluracent_green"
+                    style="@style/SmallThin"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingRight="5dp"
                     android:text="|"
-                    android:textColor="@color/green"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:textColor="@color/fluracent_green"
+                    style="@style/SmallThin"/>
 
                 <TextView
                     android:id="@+id/date_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/green"
-                    android:text="04 Mar,2017"
-                    android:textSize="12sp" />
+                    android:text="12 Mar, 2017"
+                    android:textColor="@color/fluracent_green"
+                    style="@style/SmallThin"/>
 
             </LinearLayout>
 

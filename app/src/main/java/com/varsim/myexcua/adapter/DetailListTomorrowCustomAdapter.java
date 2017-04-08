@@ -57,7 +57,7 @@ public class DetailListTomorrowCustomAdapter extends BaseAdapter {
         TextView end_time_text = (TextView) row.findViewById(R.id.end_time_text);
         TextView count_text = (TextView) row.findViewById(R.id.count_text);
         ImageView location_count_image = (ImageView) row.findViewById(R.id.location_count_image);
-        ImageView nextarrow_image = (ImageView) row.findViewById(R.id.nextarrow_image);
+        TextView nextarrow_image = (TextView) row.findViewById(R.id.nextarrow_image);
       /*
         if (WebSitePage.website_clickedposition == position) {
             website_name.setTextColor(context.getResources().getColor(R.color.white));
@@ -103,18 +103,18 @@ public class DetailListTomorrowCustomAdapter extends BaseAdapter {
         TextView end_time_text = (TextView) row.findViewById(R.id.end_time_text);
         TextView count_text = (TextView) row.findViewById(R.id.count_text);
         ImageView location_count_image = (ImageView) row.findViewById(R.id.location_count_image);
-        ImageView nextarrow_image = (ImageView) row.findViewById(R.id.nextarrow_image);
+        TextView nextarrow_image = (TextView) row.findViewById(R.id.nextarrow_image);
 
         if (position == 0)
             curent_time_bar.setImageResource(R.color.dark_green);
         else
             curent_time_bar.setImageResource(R.color.white);
-        sport_image.setImageResource(R.drawable.ic_menu_camera);
+        sport_image.setImageResource(R.mipmap.ic_swim);
         start_time_text.setText("10:00 AM");
         end_time_text.setText("11:23 AM");
         count_text.setText("15");
-        location_count_image.setImageResource(R.drawable.ic_menu_slideshow);
-        nextarrow_image.setImageResource(R.drawable.ic_menu_manage);
+        location_count_image.setImageResource(R.mipmap.ic_location_pin);
+        nextarrow_image.setText(">");
 
         list_item_tomo_layout.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -23,7 +23,7 @@
             android:layout_weight="2.5"
             android:layout_gravity="center"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_menu_camera"/>
+            android:src="@mipmap/ic_swim"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -69,8 +69,6 @@
                     android:textColor="@color/dark_green"
                     android:text="10:00 AM"/>
 
-
-
             </LinearLayout>
 
         </LinearLayout>
@@ -80,7 +78,7 @@
             android:layout_weight="0.5"
             android:layout_gravity="center"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_menu_camera"/>
+            android:src="@mipmap/ic_attendees"/>
 
         <TextView
             android:id="@+id/count_textview"
@@ -92,12 +90,14 @@
             android:textSize="18sp"
             android:textColor="@color/dark_green"
             android:text="20"/>
-        <ImageView
+        <TextView
             android:id="@+id/nextarrow_imageview"
             android:layout_width="0dp"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_menu_camera"
+            android:text=">"
+            android:gravity="center"
+            android:textSize="25sp"
             android:layout_weight="1"/>
 
     </LinearLayout>

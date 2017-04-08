@@ -3,6 +3,7 @@ package com.varsim.myexcua.activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class ScheduleActivty extends AppCompatActivity implements View.OnClickListener {
     private ScheduleAdapter mScheduleAdapter;
     private ListView mListView;
@@ -43,6 +46,11 @@ public class ScheduleActivty extends AppCompatActivity implements View.OnClickLi
     private int minute;
 
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +90,7 @@ public class ScheduleActivty extends AppCompatActivity implements View.OnClickLi
         setListViewHeightBasedOnChildren(mListView);
         mListView.setFocusable(false);
 
-        ArrayAdapter<String> repetitionArray = new ArrayAdapter<String>(ScheduleActivty.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.repetition_array));
+        ArrayAdapter<String> repetitionArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.repetition_array));
         repetitionArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mRepetitionSpinner.setAdapter(repetitionArray);
         /** Get the current time */
@@ -197,5 +205,6 @@ public class ScheduleActivty extends AppCompatActivity implements View.OnClickLi
                 }, mHour, mMinute, false);
         timePickerDialog.show();
     }
+
 
 }

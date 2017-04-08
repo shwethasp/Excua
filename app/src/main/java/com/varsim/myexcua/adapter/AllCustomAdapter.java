@@ -117,10 +117,10 @@ public class AllCustomAdapter extends RecyclerView.Adapter<AllCustomAdapter.View
             activityHashmap.put(datearray.get(1), 4);
             activityHashmap.put(datearray.get(2), 3);
 
-            mSportImage.add(R.drawable.ic_menu_camera);
-            mSportImage.add(R.drawable.ic_menu_share);
-            mSportImage.add(R.drawable.ic_menu_camera);
-            mSportImage.add(R.drawable.ic_menu_camera);
+            mSportImage.add(R.mipmap.ic_swim);
+            mSportImage.add(R.mipmap.ic_swim);
+            mSportImage.add(R.mipmap.ic_swim);
+            mSportImage.add(R.mipmap.ic_swim);
 
 
             for (int j = 0; j < datearray.size(); j++) {
@@ -150,14 +150,14 @@ public class AllCustomAdapter extends RecyclerView.Adapter<AllCustomAdapter.View
                     TextView start_time_textview = (TextView) dynamicActivityview.findViewById(R.id.start_time_textview);
                     TextView end_time_textview = (TextView) dynamicActivityview.findViewById(R.id.end_time_textview);
                     TextView count_textview = (TextView) dynamicActivityview.findViewById(R.id.count_textview);
-                    ImageView nextarrow_imageview = (ImageView) dynamicActivityview.findViewById(R.id.nextarrow_imageview);
+                    TextView nextarrow_imageview = (TextView) dynamicActivityview.findViewById(R.id.nextarrow_imageview);
 
                     sport_type_image.setImageResource(mSportImage.get(k));
                     apartment_name_text.setText("ITPL");
                     start_time_textview.setText("10:01 AM");
                     end_time_textview.setText("11:01 AM");
                     count_textview.setText("12");
-                    nextarrow_imageview.setImageResource(R.drawable.ic_menu_slideshow);
+                    nextarrow_imageview.setText(">");
 
 
                     if (dynamicActivityview.getParent() != null)

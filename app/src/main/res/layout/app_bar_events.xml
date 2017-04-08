@@ -38,6 +38,8 @@
             android:id="@+id/tabLayout"
             app:tabIndicatorColor="@android:color/white"
             app:tabIndicatorHeight="5dp"
+            app:tabTextColor="@color/cyan"
+            app:tabTextAppearance="@style/SmallThin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/dark_green"
@@ -55,6 +57,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="@color/colorPrimary"
-        app:srcCompat="@android:drawable/ic_menu_add" />
+        app:srcCompat="@mipmap/icon_add_participants" />
 
 </android.support.design.widget.CoordinatorLayout>

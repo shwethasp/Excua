@@ -112,10 +112,10 @@ public class TomorrowCustomAdapter extends RecyclerView.Adapter<TomorrowCustomAd
         } else if (holder.getItemViewType() == TomorrowFragment.TomorrowDetails) {
             TomorrowCustomAdapter.TomorrowDetailsViewHolder viewholder = (TomorrowCustomAdapter.TomorrowDetailsViewHolder) holder;
 
-            sporticon.add(R.drawable.ic_menu_gallery);
-            sporticon.add(R.drawable.ic_menu_camera);
-            sporticon.add(R.drawable.ic_menu_manage);
-            sporticon.add(R.drawable.ic_menu_manage);
+            sporticon.add(R.mipmap.ic_swim);
+            sporticon.add(R.mipmap.ic_swim);
+            sporticon.add(R.mipmap.ic_swim);
+            sporticon.add(R.mipmap.ic_swim);
 
             startTime.add("10:00 AM");
             startTime.add("11:00 AM");
@@ -128,10 +128,10 @@ public class TomorrowCustomAdapter extends RecyclerView.Adapter<TomorrowCustomAd
             endTime.add("2:15 PM");
             endTime.add("2:15 PM");
 
-            locationNumberIcon.add(R.drawable.ic_menu_gallery);
-            locationNumberIcon.add(R.drawable.ic_menu_slideshow);
-            locationNumberIcon.add(R.drawable.ic_menu_share);
-            locationNumberIcon.add(R.drawable.ic_menu_share);
+            locationNumberIcon.add(R.mipmap.ic_location_pin);
+            locationNumberIcon.add(R.mipmap.ic_location_pin);
+            locationNumberIcon.add(R.mipmap.ic_location_pin);
+            locationNumberIcon.add(R.mipmap.ic_location_pin);
 
 
             // Create custom adapter object ( see below CustomAdapter.java )

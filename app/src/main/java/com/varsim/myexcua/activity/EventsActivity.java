@@ -1,5 +1,6 @@
 package com.varsim.myexcua.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -20,6 +21,8 @@ import android.widget.Toast;
 
 import com.varsim.myexcua.R;
 import com.varsim.myexcua.adapter.PagerAdapters;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.varsim.myexcua.R.id.tabLayout;
 
@@ -118,10 +121,16 @@ public class EventsActivity extends AppCompatActivity
         });
         //Adding onTabselectedListener to swipe views
         mTabLayout.setOnTabSelectedListener(this);
-
-
     }
 
+    private TabLayout.Tab createTabForTittle(String title) {
+        if (mTabLayout == null) {
+            mTabLayout = (TabLayout) findViewById(tabLayout);
+        }
+        TabLayout.Tab tab = mTabLayout.newTab();
+        tab.setText(title);
+        return tab;
+    }
 
     @Override
     public void onBackPressed() {
@@ -194,5 +203,10 @@ public class EventsActivity extends AppCompatActivity
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
 
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }
