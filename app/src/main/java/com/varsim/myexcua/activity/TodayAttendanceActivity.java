@@ -1,14 +1,19 @@
 package com.varsim.myexcua.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -76,7 +81,7 @@ public class TodayAttendanceActivity extends AppCompatActivity {
         listView.setAdapter(attendanceAdapter);
         listView.setTextFilterEnabled(true);
         listView.setFocusable(false);
-
+        setListViewHeightBasedOnChildren(listView);
         // setupSearchView();
 
         attendanceButton.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +119,31 @@ public class TodayAttendanceActivity extends AppCompatActivity {
                 // TODO Auto-generated method stub
             }
         });
+    }
+        /****
+         * Method for Setting the Height of the ListView dynamically.
+         * *** Hack to fix the issue of not showing all the items of the ListView
+         * *** when placed inside a ScrollView
+         ****/
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null)
+            return;
+
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        int totalHeight = 0;
+        View view = null;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            view = listAdapter.getView(i, view, listView);
+            if (i == 0)
+                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, LinearLayout.LayoutParams.WRAP_CONTENT));
+            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += view.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+    }
 
 /*
     *//*mSearchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
@@ -160,7 +190,16 @@ public class TodayAttendanceActivity extends AppCompatActivity {
     public boolean onQueryTextSubmit(String query) {
         return false;
     }*/
-    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case android.R.id.home:
+                Intent homeIntent = new Intent(this, EventsActivity.class);
+                homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(homeIntent);
+        }
+        return (super.onOptionsItemSelected(menuItem));
+    }
 
 }

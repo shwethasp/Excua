@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:background="@android:color/white"
-    android:layout_margin="15dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="@android:color/white"
+    android:orientation="horizontal">
 
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:weightSum="10"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
         android:layout_height="wrap_content">
+
         <ImageView
             android:id="@+id/sport_type_image"
-            android:layout_width="0dp"
-            android:layout_weight="2.5"
-            android:layout_gravity="center"
-            android:layout_height="match_parent"
-            android:src="@mipmap/ic_swim"/>
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:src="@mipmap/ic_swim" />
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="5"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
-            
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@id/sport_type_image"
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/apartment_name_text"
+                style="@style/ModerateBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Purvi Pride Appt."
-                android:textSize="20sp"
-                android:textColor="@color/dark_green"/>
+                android:layout_marginBottom="4dp"
+                android:text="Purvi Pride Appt." />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -46,64 +46,70 @@
 
                 <TextView
                     android:id="@+id/start_time_textview"
+                    style="@style/SmallNormal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="17sp"
-                    android:textColor="@color/dark_green"
-                    android:text="10:00 AM"/>
+                    android:text="10:00 AM" />
 
                 <TextView
+                    style="@style/SmallNormal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/dark_green"
                     android:layout_marginLeft="3dp"
                     android:layout_marginRight="3dp"
-                    android:textSize="17sp"
-                    android:text="to"/>
+                    android:text="to" />
 
                 <TextView
                     android:id="@+id/end_time_textview"
+                    style="@style/SmallNormal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="17sp"
-                    android:textColor="@color/dark_green"
-                    android:text="10:00 AM"/>
+                    android:text="10:00 AM" />
 
             </LinearLayout>
 
+
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_weight="0.5"
+        <TextView
+            android:id="@+id/nextarrow_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:layout_height="match_parent"
-            android:src="@mipmap/ic_attendees"/>
+            android:layout_marginRight="8dp"
+            android:text=">"
+            android:textSize="20sp"
+            android:textStyle="normal" />
 
         <TextView
             android:id="@+id/count_textview"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:textSize="18sp"
-            android:textColor="@color/dark_green"
-            android:text="20"/>
-        <TextView
-            android:id="@+id/nextarrow_imageview"
-            android:layout_width="0dp"
-            android:layout_gravity="center"
+            style="@style/SmallThin"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=">"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@id/nextarrow_imageview"
             android:gravity="center"
-            android:textSize="25sp"
-            android:layout_weight="1"/>
+            android:text="20" />
 
-    </LinearLayout>
-<View
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:background="@color/light_gray"/>
-</LinearLayout>
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginRight="1dp"
+            android:layout_toLeftOf="@id/count_textview"
+            android:src="@mipmap/ic_attendees" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="4dp"
+            android:background="@color/light_gray" />
+    </RelativeLayout>
 </LinearLayout>

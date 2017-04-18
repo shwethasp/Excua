@@ -4,16 +4,19 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -36,7 +39,10 @@ public class ScheduleActivty extends AppCompatActivity implements View.OnClickLi
     private ListView mListView;
     ArrayList<AttendanceModel> attendanceModelArray = new ArrayList<AttendanceModel>();
     private Spinner mRepetitionSpinner;
-    ImageView mDateSpinner, mStartSpinner, mEndSpinner;
+
+    private LinearLayout mSetDateLayout;
+    private LinearLayout mSetStartsOnLayout;
+    private LinearLayout mSetEndsOnLayout;
     private static TextView mDateText;
     private static TextView mStartText;
     private static TextView mEndText;
@@ -69,9 +75,9 @@ public class ScheduleActivty extends AppCompatActivity implements View.OnClickLi
         }
 
         initializeui();
-        mDateSpinner.setOnClickListener(this);
-        mStartSpinner.setOnClickListener(this);
-        mEndSpinner.setOnClickListener(this);
+        mSetDateLayout.setOnClickListener(this);
+        mSetStartsOnLayout.setOnClickListener(this);
+        mSetEndsOnLayout.setOnClickListener(this);
 
         ArrayList<String> mParticipantName = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.participants)));
 
@@ -89,10 +95,25 @@ public class ScheduleActivty extends AppCompatActivity implements View.OnClickLi
         mListView.setAdapter(mScheduleAdapter);
         setListViewHeightBasedOnChildren(mListView);
         mListView.setFocusable(false);
+        mListView.setTextFilterEnabled(true);
 
         ArrayAdapter<String> repetitionArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.repetition_array));
         repetitionArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         mRepetitionSpinner.setAdapter(repetitionArray);
+
+        mRepetitionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                ((TextView) adapterView.getChildAt(0)).setGravity(Gravity.CENTER);
+                ((TextView) adapterView.getChildAt(0)).setTextColor(getResources().getColor(R.color.dark_green));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         /** Get the current time */
         final Calendar cal = Calendar.getInstance();
         hour = cal.get(Calendar.HOUR_OF_DAY);
@@ -102,14 +123,17 @@ public class ScheduleActivty extends AppCompatActivity implements View.OnClickLi
 
     private void initializeui() {
         mListView = (ListView) findViewById(R.id.schedule_participant_listview);
-        mDateSpinner = (ImageView) findViewById(R.id.datespinner);
+
         mDateText = (TextView) findViewById(R.id.date_text);
+        mStartText = (TextView) findViewById(R.id.start_text);
+        mEndText =(TextView)findViewById(R.id.end_text);
+
+        mSetDateLayout = (LinearLayout)findViewById(R.id.setdate_layout);
+        mSetStartsOnLayout = (LinearLayout) findViewById(R.id.set_starton_layout);
+        mSetEndsOnLayout = (LinearLayout) findViewById(R.id.set_endson_layout);
         mRepetitionSpinner = (Spinner) findViewById(R.id.repetition_spinner);
 
-        mStartSpinner = (ImageView) findViewById(R.id.startspinner);
-        mStartText = (TextView) findViewById(R.id.start_text);
-        mEndSpinner = (ImageView) findViewById(R.id.endspinner);
-        mEndText =(TextView)findViewById(R.id.end_text);
+
     }
 
     /****
@@ -140,15 +164,15 @@ public class ScheduleActivty extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.datespinner:
+            case R.id.setdate_layout:
                 OpenDatePickerDialog();
                 break;
 
-            case R.id.startspinner:
+            case R.id.set_starton_layout:
                 OpenTimePickerDialog(mStartText);
                 break;
 
-            case R.id.endspinner:
+            case R.id.set_endson_layout:
                 OpenTimePickerDialog(mEndText);
                 break;
 
@@ -206,5 +230,14 @@ public class ScheduleActivty extends AppCompatActivity implements View.OnClickLi
         timePickerDialog.show();
     }
 
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case android.R.id.home:
+                Intent homeIntent = new Intent(this, EventsActivity.class);
+                homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(homeIntent);
+        }
+        return (super.onOptionsItemSelected(menuItem));
+    }
 }

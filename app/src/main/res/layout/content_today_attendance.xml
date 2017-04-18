@@ -10,197 +10,209 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.varsim.myexcua.activity.TodayAttendanceActivity"
     tools:showIn="@layout/activity_today_attendance">
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:weightSum="10">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="2"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ic_swim" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="7"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/ModerateBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Purvi Pride Apartment" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/SmallNormal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="10:00 AM" />
-
-                <TextView
-                    style="@style/SmallNormal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:text="to" />
-
-                <TextView
-                    style="@style/SmallNormal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="11:00 AM" />
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@color/white"
-        android:orientation="vertical">
-
-        <RelativeLayout
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+          <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
-
+            android:layout_height="match_parent"
+            android:orientation="vertical">
             <LinearLayout
-                android:id="@+id/participant_add_layout"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="8dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:orientation="vertical">
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:weightSum="10">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_gravity="center"
+                    android:layout_weight="2"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_swim" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="7"
+                    android:orientation="vertical">
 
                     <TextView
                         style="@style/ModerateBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="Participants" />
+                        android:text="Purvi Pride Apartment" />
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="2dp"
-                        android:src="@mipmap/icon_add_participants" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="center"
-                        android:src="@mipmap/ic_attendees" />
-
-                    <TextView
-                        style="@style/ModerateThin"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="3dp"
-                        android:text="20" />
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/SmallNormal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10:00 AM" />
+
+                        <TextView
+                            style="@style/SmallNormal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:text="to" />
+
+                        <TextView
+                            style="@style/SmallNormal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="11:00 AM" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_toRightOf="@id/participant_add_layout"
-                android:layout_alignParentRight="true"
-                android:orientation="vertical"
-                android:layout_alignBottom="@id/participant_add_layout">
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/white"
+                android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/attendance_done_btn"
-                    style="@style/ModerateThin"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:padding="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp">
+
+                    <LinearLayout
+                        android:id="@+id/participant_add_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="8dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/ModerateBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="Participants" />
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="2dp"
+                                android:src="@mipmap/icon_add_participants" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:src="@mipmap/ic_attendees" />
+
+                            <TextView
+                                style="@style/ModerateThin"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="3dp"
+                                android:text="20" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toRightOf="@id/participant_add_layout"
+                        android:layout_alignParentRight="true"
+                        android:orientation="vertical"
+                        android:layout_alignBottom="@id/participant_add_layout">
+
+                        <Button
+                            android:id="@+id/attendance_done_btn"
+                            style="@style/ModerateThin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:padding="8dp"
+                            android:background="@drawable/rounded_corner_attendance_done"
+                            android:text="Attendance"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:textAllCaps="false" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="@color/white" />
+                <!-- Editext for Search -->
+                <EditText
+                    android:id="@+id/inputSearch"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:background="@drawable/rounded_corner_attendance_done"
-                    android:text="Attendance"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:textAllCaps="false" />
-            </RelativeLayout>
-        </RelativeLayout>
+                    android:drawableLeft="@android:drawable/ic_menu_search"
+                    android:hint="Search by Participants"
+                    android:inputType="textVisiblePassword"
+                    android:paddingBottom="2dp"
+                    android:paddingTop="2dp" />
 
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:background="@color/white" />
-        <!-- Editext for Search -->
-        <EditText
-            android:id="@+id/inputSearch"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/rounded_corner_attendance_done"
-            android:drawableLeft="@android:drawable/ic_menu_search"
-            android:hint="Search by Participants"
-            android:inputType="textVisiblePassword"
-            android:paddingBottom="2dp"
-            android:paddingTop="2dp" />
+                <!--  <SearchView
+                      android:id="@+id/searchview"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:queryHint="Search by Participants">
 
-        <!--  <SearchView
-              android:id="@+id/searchview"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:queryHint="Search by Participants">
-
-          </SearchView>-->
+                  </SearchView>-->
 
 
-        <ListView
-            android:id="@+id/participant_listview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                <ListView
+                    android:id="@+id/participant_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-        </ListView>
+                </ListView>
 
-    </LinearLayout>
+            </LinearLayout>
+              <View
+                  android:layout_width="match_parent"
+                  android:layout_height="10dp"/>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

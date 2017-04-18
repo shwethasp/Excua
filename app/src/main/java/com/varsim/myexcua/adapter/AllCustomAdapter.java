@@ -1,6 +1,7 @@
 package com.varsim.myexcua.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.varsim.myexcua.R;
+import com.varsim.myexcua.activity.TodayAttendanceActivity;
 import com.varsim.myexcua.fragment.AllFragment;
 
 import java.util.ArrayList;
@@ -143,7 +145,7 @@ public class AllCustomAdapter extends RecyclerView.Adapter<AllCustomAdapter.View
                 viewholder.mAllDateRangeDyanamicLayout.addView(dynamicDateview);
 
                 for (int k = 0; k < noOfActivities; k++) {
-                    View dynamicActivityview = mInflater.inflate(R.layout.all_listactivities_dyanamic, null,
+                    final View dynamicActivityview = mInflater.inflate(R.layout.all_listactivities_dyanamic, null,
                             false);
                     ImageView sport_type_image = (ImageView) dynamicActivityview.findViewById(R.id.sport_type_image);
                     TextView apartment_name_text = (TextView) dynamicActivityview.findViewById(R.id.apartment_name_text);
@@ -163,6 +165,14 @@ public class AllCustomAdapter extends RecyclerView.Adapter<AllCustomAdapter.View
                     if (dynamicActivityview.getParent() != null)
                         ((ViewGroup) dynamicActivityview.getParent()).removeView(dynamicActivityview);
                     viewholder.mAllDateRangeDyanamicLayout.addView(dynamicActivityview);
+
+                    dynamicActivityview.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent i = new Intent(mContext, TodayAttendanceActivity.class);
+                            mContext.startActivity(i);
+                        }
+                    });
                 }
 
                 //   }

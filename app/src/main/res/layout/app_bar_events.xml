@@ -39,7 +39,7 @@
             app:tabIndicatorColor="@android:color/white"
             app:tabIndicatorHeight="5dp"
             app:tabTextColor="@color/cyan"
-            app:tabTextAppearance="@style/SmallThin"
+            app:tabTextAppearance="@style/UltraSmallThin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/dark_green"

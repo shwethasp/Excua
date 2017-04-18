@@ -1,367 +1,377 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_schedule"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
+    android:layout_height="wrap_content"
+    android:background="@color/light_gray"
+    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-
     tools:showIn="@layout/activity_schedule_activty">
 
-    <LinearLayout
-        android:id="@+id/activity_schedule"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/light_gray"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="center"
-                android:gravity="center_horizontal"
-                android:src="@mipmap/logo_swim" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:gravity="center_horizontal"
+                    android:src="@mipmap/logo_swim" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/ModerateBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Swimming"
+                        android:textAllCaps="false"
+                        android:textColor="@color/dark_green" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginLeft="5dp"
+                        android:src="@mipmap/ic_edit" />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/ModerateThin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Schedule" />
+            </LinearLayout>
+            <!--schedule card-->
+            <!-- date lay-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:weightSum="10">
+
+                <TextView
+                    style="@style/ModerateNormal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:text="Date"
+                    android:textColor="@color/dark_green" />
+
+                <LinearLayout
+                    android:id="@+id/setdate_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+
+                    <TextView
+                        android:id="@+id/date_text"
+                        style="@style/ModerateNormal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.8"
+                        android:gravity="center"
+                        android:text="dd/MM/yyyy" />
+
+                    <ImageView
+                        android:id="@+id/datespinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginRight="3dp"
+                        android:gravity="end"
+                        android:paddingTop="5dp"
+                        android:src="@android:drawable/arrow_down_float"></ImageView>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_gray" />
+
+            <!--    starts on-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:weightSum="10">
+
+                <TextView
+                    style="@style/ModerateNormal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:text="Starts on"
+                    android:textColor="@color/dark_green" />
+
+                <LinearLayout
+                    android:id="@+id/set_starton_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+
+                    <TextView
+                        android:id="@+id/start_text"
+                        style="@style/ModerateNormal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.8"
+                        android:gravity="center"
+                        android:text="hh:mm" />
+
+                    <ImageView
+                        android:id="@+id/startspinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginRight="3dp"
+                        android:gravity="end"
+                        android:paddingTop="5dp"
+                        android:src="@android:drawable/arrow_down_float"></ImageView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_gray" />
+
+            <!-- ends on-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:weightSum="10">
+
+                <TextView
+                    style="@style/ModerateNormal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:text="Ends on"
+                    android:textColor="@color/dark_green" />
+
+                <LinearLayout
+                    android:id="@+id/set_endson_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+
+                    <TextView
+                        android:id="@+id/end_text"
+                        style="@style/ModerateNormal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.8"
+                        android:gravity="center"
+                        android:text="hh:mm" />
+
+                    <ImageView
+                        android:id="@+id/endspinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginRight="3dp"
+                        android:gravity="end"
+                        android:paddingTop="5dp"
+                        android:src="@android:drawable/arrow_down_float"></ImageView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_gray" />
+            <!--repetition-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:weightSum="10">
+
+                <TextView
+                    style="@style/ModerateNormal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:text="Repetition"
+                    android:textColor="@color/dark_green" />
+
+                <Spinner
+                    android:id="@+id/repetition_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_weight="4"
+                    android:dropDownSelector="@color/white"
+                    android:gravity="end"></Spinner>
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/ModerateThin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="16dp"
+                android:text="Location" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/white">
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/icon_add_participants" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="6dp"
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/participant_text"
+                    style="@style/ModerateThin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Swimming"
-                    android:textAllCaps="false"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Participants" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/participant_text"
+                    android:text="(20)"
                     android:textColor="@color/dark_green"
-                    style="@style/ModerateBold" />
+                    android:textSize="18sp" />
 
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_marginLeft="5dp"
-                    android:src="@mipmap/ic_edit" />
-            </LinearLayout>
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@mipmap/icon_add_participants" />
+            </RelativeLayout>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="Schedule"
-                android:textColor="@color/green"
-                style="@style/ModerateThin" />
-        </LinearLayout>
-        <!--schedule card-->
-        <!-- date lay-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            android:weightSum="10">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="6"
-                android:text="Date"
-                android:textColor="@color/dark_green"
-                style="@style/ModerateNormal" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-
-                <TextView
-                    android:id="@+id/date_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="0.8"
-                    android:gravity="center"
-                    android:text="dd/MM/yyyy"
-                    android:textColor="@color/dark_green"
-                    android:textSize="18sp" />
-
-                <ImageView
-                    android:id="@+id/datespinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginRight="3dp"
-                    android:gravity="end"
-                    android:paddingTop="5dp"
-                    android:src="@android:drawable/arrow_down_float"></ImageView>
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/light_gray" />
-
-        <!--    starts on-->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            android:weightSum="10">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="6"
-                android:text="Starts on"
-                android:textColor="@color/dark_green"
-                style="@style/ModerateNormal" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-
-                <TextView
-                    android:id="@+id/start_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="0.8"
-                    android:gravity="center"
-                    android:text="hh:mm"
-                    android:textColor="@color/dark_green"
-                    android:textSize="18sp" />
-
-                <ImageView
-                    android:id="@+id/startspinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginRight="3dp"
-                    android:gravity="end"
-                    android:paddingTop="5dp"
-                    android:src="@android:drawable/arrow_down_float"></ImageView>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/light_gray" />
-
-        <!-- ends on-->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            android:weightSum="10">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="6"
-                android:text="Ends on"
-                android:textColor="@color/dark_green"
-                style="@style/ModerateNormal" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-
-                <TextView
-                    android:id="@+id/end_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="0.8"
-                    android:gravity="center"
-                    android:text="hh:mm"
-                    android:textColor="@color/dark_green"
-                    android:textSize="18sp" />
-
-                <ImageView
-                    android:id="@+id/endspinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginRight="3dp"
-                    android:gravity="end"
-                    android:paddingTop="5dp"
-                    android:src="@android:drawable/arrow_down_float"></ImageView>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/light_gray" />
-        <!--repetition-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            android:weightSum="10">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="6"
-                android:text="Repetition"
-                android:textColor="@color/dark_green"
-                style="@style/ModerateNormal" />
-
-            <Spinner
-                android:id="@+id/repetition_spinner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_weight="4"
-                android:dropDownSelector="@color/white"
-                android:gravity="end"></Spinner>
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Location"
-            android:textColor="@color/green"
-            style="@style/ModerateThin"  />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:background="@color/white">
-
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@mipmap/icon_add_participants" />
-        </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/participant_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:text="Participants"
-                android:textColor="@color/green"
-                style="@style/ModerateThin"  />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:layout_marginTop="10dp"
-                android:layout_toRightOf="@+id/participant_text"
-                android:text="(20)"
-                android:textColor="@color/dark_green"
-                android:textSize="18sp" />
-
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="3dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:src="@mipmap/icon_add_participants" />
-        </RelativeLayout>
+                android:background="@color/white"
+                android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@color/white"
-            android:orientation="vertical">
+                <!-- <SearchView
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:queryHint="Search">
+                 </SearchView>-->
 
-           <!-- <SearchView
+                <EditText
+                    android:id="@+id/inputSearch"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/rounded_corner_attendance_done"
+                    android:drawableLeft="@android:drawable/ic_menu_search"
+                    android:hint="Search by Participants"
+                    android:inputType="textVisiblePassword"
+                    android:paddingBottom="2dp"
+                    android:paddingTop="2dp" />
+
+                <ListView
+                    android:id="@+id/schedule_participant_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </ListView>
+            </LinearLayout>
+
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:queryHint="Search">
-            </SearchView>-->
-
-            <EditText
-            android:id="@+id/inputSearch"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="Search by Participants"
-            android:layout_marginLeft="10dp"
-            android:paddingTop="2dp"
-                android:layout_marginTop="5dp"
-            android:paddingBottom="2dp"
-            android:background="@drawable/rounded_corner_attendance_done"
-            android:drawableLeft="@android:drawable/ic_menu_search"
-            android:layout_marginRight="10dp"
-            android:inputType="textVisiblePassword"/>
-            <ListView
-                android:id="@+id/schedule_participant_listview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </ListView>
+                android:layout_height="20dp"
+                android:background="@color/light_gray" />
         </LinearLayout>
+    </ScrollView>
+</LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:background="@color/light_gray" />
-    </LinearLayout>
-</ScrollView>
 

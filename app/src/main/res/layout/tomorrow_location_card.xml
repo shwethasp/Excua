@@ -48,14 +48,14 @@
                     android:paddingRight="5dp"
                     android:text="Tuesday"
                     android:textColor="@color/fluracent_green"
-                    style="@style/SmallThin"/>
+                    style="@style/UltraSmallThin"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingRight="5dp"
                     android:text="|"
                     android:textColor="@color/fluracent_green"
-                    style="@style/SmallThin"/>
+                    style="@style/UltraSmallThin"/>
 
                 <TextView
                     android:id="@+id/date_text"
@@ -63,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:text="13 Mar, 2017"
                     android:textColor="@color/fluracent_green"
-                    style="@style/SmallThin"/>
+                    style="@style/UltraSmallThin"/>
 
             </LinearLayout>
 
