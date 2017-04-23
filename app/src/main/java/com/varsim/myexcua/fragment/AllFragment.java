@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.varsim.myexcua.R;
 import com.varsim.myexcua.adapter.AllCustomAdapter;
 
@@ -28,7 +29,7 @@ public class AllFragment extends Fragment {
     ArrayList<String> mStartTime = new ArrayList<>();
     ArrayList<String> mEndTime = new ArrayList<>();
     int count;
-
+    private FirebaseRecyclerAdapter<String, ViewHolder> recyclerAdapter;
 
     public AllFragment() {
         // Required empty public constructor
@@ -42,15 +43,27 @@ public class AllFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_all, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.all_recyclerView);
-        // mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
         allCustomAdapter = new AllCustomAdapter(getContext(), mDatasetTypes, mSportImage, mStartTime, mEndTime, count);
         mRecyclerView.setAdapter(allCustomAdapter);
-
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(mLayoutManager);
+//        recyclerAdapter = new FirebaseRecyclerAdapter<String, ViewHolder>(String.class, R.layout.) {
+//            @Override
+//            protected void populateViewHolder(ViewHolder viewHolder, String model, int position) {
+//
+//            }
+//        };
 
         return view;
     }
 
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+
+        }
+    }
 }

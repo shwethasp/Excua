@@ -3,8 +3,10 @@ package com.varsim.myexcua.model;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Created by Venus and varghese on 4/21/2017.
@@ -33,6 +35,22 @@ public class Event {
         this.eventCreaterUID = eventCreaterUID;
         this.eventUID = fireDBM.getmEventDB().push().getKey();
     }
+
+    public Event(String uniqID, Map<String, String> eventData) {
+        this.eventUID = uniqID;
+        this.eventCreaterUID = eventData.get("eventCreaterUID");
+        this.eventType = eventData.get("eventType");
+        this.eventStartDateString = eventData.get("eventStartDateString");
+        this.eventEndDateString = eventData.get("eventEndDateString");
+
+        try {
+            this.eventStartDate = getSimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(this.eventStartDateString);
+            this.eventEndDate = getSimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(this.eventEndDateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void createEvent() {
         FireDBManager.getInstance().createEvent(this);

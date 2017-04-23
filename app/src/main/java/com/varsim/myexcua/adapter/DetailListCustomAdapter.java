@@ -8,12 +8,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.varsim.myexcua.R;
 import com.varsim.myexcua.activity.TodayAttendanceActivity;
+import com.varsim.myexcua.model.Event;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -23,9 +24,7 @@ import java.util.ArrayList;
 public class DetailListCustomAdapter extends BaseAdapter {
 
     private ArrayList<Integer> mSportImage;
-    private ArrayList<String> mStartTime;
-    private ArrayList<String> mEndTime;
-    private ArrayList<Integer> mLocationNumberImage;
+    private ArrayList<Event> mEventsList;
 
     LayoutInflater inflater;
     private Context mContext;
@@ -33,15 +32,11 @@ public class DetailListCustomAdapter extends BaseAdapter {
     /*************
      * Constructor
      *****************/
-    public DetailListCustomAdapter(Context applicationContext,
-                                   ArrayList<Integer> mSportImage, ArrayList<String> mStartTime, ArrayList<String> mEndTime, ArrayList<Integer> mLocationNumberImage) {
+    public DetailListCustomAdapter(Context applicationContext, ArrayList<Event> eventsList) {
 
         /********** Take passed values **********/
         this.mContext = applicationContext;
-        this.mSportImage = mSportImage;
-        this.mStartTime = mStartTime;
-        this.mEndTime = mEndTime;
-        this.mLocationNumberImage = mLocationNumberImage;
+        this.mEventsList = eventsList;
         /***********  Layout inflator to call external xml layout () **********************/
         inflater = (LayoutInflater)applicationContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);;
     }
@@ -76,7 +71,7 @@ public class DetailListCustomAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mStartTime.size();
+        return mEventsList.size();
     }
 
     @Override
@@ -110,8 +105,13 @@ public class DetailListCustomAdapter extends BaseAdapter {
         else
             curent_time_bar.setImageResource(R.color.white);
         sport_image.setImageResource(R.mipmap.ic_swim);
-        start_time_text.setText("10:00 am");
-        end_time_text.setText("11:23 am");
+        Event event = mEventsList.get(position);
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm a");
+        String startTimeString = simpleDateFormat.format(event.getEventStartDate());
+        start_time_text.setText(startTimeString);
+        String endTimeString = simpleDateFormat.format(event.getEventEndDate());
+        end_time_text.setText(endTimeString);
         count_text.setText("15");
         location_count_image.setImageResource(R.mipmap.ic_location_pin);
         nextarrow_image.setText(">");

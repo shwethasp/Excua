@@ -200,7 +200,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void createAnEvent(String userID) {
         Event event = new Event(userID);
         event.setEventStartDate(dateForString("2017-04-23:04:30"));
-        event.setEventType("Swiming");
+        event.setEventType("Swimming");
         event.setEventEndDate(dateForString("2017-04-23:06:30"));
         event.createEvent();
     }

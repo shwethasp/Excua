@@ -6,7 +6,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Map;
 
 /**
  * Created by Deepu on 18-04-2017.
@@ -71,11 +74,23 @@ public class FireDBManager {
         });
     }
 
-    public void getEventsForUser(String userID, final EventsRetrivevalCompletion eventsRetrivevalCompletion) {
-        getmEventDB().orderByChild("startDate").addListenerForSingleValueEvent(new ValueEventListener() {
+    public void getEventsForDate(Date date, final EventsRetrivevalCompletion eventsRetrivevalCompletion) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        final String dateString = simpleDateFormat.format(date);
+
+        getmEventDB().child(dateString).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Map<String, Object> objectMap = (Map<String, Object>)dataSnapshot.getValue();
 
+                ArrayList<Event> eventArrayList = new ArrayList<>();
+
+                for (Map.Entry<String, Object> eventData : objectMap.entrySet()) {
+                    Event anEvent = new Event(eventData.getKey(), (Map<String, String>) eventData.getValue());
+                    eventArrayList.add(anEvent);
+                }
+
+                eventsRetrivevalCompletion.successfullyRetrieved(eventArrayList);
             }
 
             @Override
@@ -86,6 +101,7 @@ public class FireDBManager {
     }
 
 
+
     //Interface declarations
     public interface UserRetrievalCompletion {
         void successfullyRetrieved(User user);
@@ -94,7 +110,7 @@ public class FireDBManager {
     }
 
     public interface EventsRetrivevalCompletion {
-        void successfullyRetrieved(List<Event> user);
+        void successfullyRetrieved(ArrayList<Event> user);
 
         void failedToRetrieve(DatabaseError var1);
     }
