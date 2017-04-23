@@ -46,6 +46,7 @@
                         android:layout_height="wrap_content"
                         android:backgroundTint="@android:color/transparent"
                         android:hint="@string/username"
+                        android:text="test@myexcua.com"
                         android:paddingLeft="10dp"
                         android:singleLine="true"
                         android:textColorHint="@color/green" />
@@ -73,6 +74,8 @@
                         android:layout_height="wrap_content"
                         android:backgroundTint="@android:color/transparent"
                         android:hint="@string/password"
+                        android:text="test1234"
+                        android:inputType="textPassword"
                         android:paddingLeft="10dp"
                         android:singleLine="true"
                         android:textColorHint="@color/green" />
@@ -136,6 +139,7 @@
                 android:gravity="center">
 
                 <Button
+                    android:id="@+id/btnSignUp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"

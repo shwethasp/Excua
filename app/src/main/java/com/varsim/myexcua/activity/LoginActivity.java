@@ -1,11 +1,13 @@
 package com.varsim.myexcua.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -18,8 +20,17 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.database.DatabaseError;
 import com.varsim.myexcua.R;
 import com.varsim.myexcua.library.Library;
+import com.varsim.myexcua.model.CurrentUser;
+import com.varsim.myexcua.model.Event;
+import com.varsim.myexcua.model.FireDBManager;
+import com.varsim.myexcua.model.User;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -30,6 +41,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Button mLoginButton;
 
     private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
+    ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +53,35 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
         initializeui();
+
+        mProgressDialog = new ProgressDialog(this);
+
         mLoginButton.setOnClickListener(this);
         mAuth = FirebaseAuth.getInstance();
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (firebaseAuth.getCurrentUser() != null) {
+                    // TODO: Add
+                }
+            }
+        };
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
     }
 
     private void initializeui() {
@@ -58,7 +99,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Library.hideKeyboard(LoginActivity.this);
         switch (v.getId()){
             case R.id.login_btn:
-
                 String emailText = mEditUsername.getText().toString();
                 String passwordText = mEditPassword.getText().toString();
                 if (validateEmailId(emailText, this)) {
@@ -66,6 +106,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         loginToUser(emailText, passwordText);
                     }
                 }
+                break;
+            case R.id.btnSignUp:
+                signUpWithData();
         }
     }
 
@@ -75,7 +118,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private boolean validateEmailId(String emailID, Context context) {
-        if (emailID == null || emailID.length() == 0 ) {
+        if (TextUtils.isEmpty(emailID)) {
             Library.showToastShort(context, "Please enter EmailID.");
             return false;
         }else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailID).matches()){
@@ -86,7 +129,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private boolean validatePassword(String password, Context context) {
-        if (password == null || password.length() == 0) {
+        if (TextUtils.isEmpty(password)) {
             Library.showToastShort(context, "Please enter Password.");
             return false;
         }
@@ -94,31 +137,81 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void loginToUser(String userName, String password) {
+        mProgressDialog.setMessage("Logging in...");
+        mProgressDialog.show();
         mAuth.signInWithEmailAndPassword(userName, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Library.logDebug("signInWithEmail:onComplete:" + task.isSuccessful());
                         if (!task.isSuccessful()) {
-                            if (task.getException() instanceof FirebaseAuthInvalidUserException) {
-                                Library.showToastShort(LoginActivity.this, "Please check your email and password");
-                            }else if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                Library.showToastShort(LoginActivity.this, "Please check your email and password");
-                            }else {
-                                Library.showToastShort(LoginActivity.this, "Login failed, please try again");
-                            }
+                            throughErrorFor(task.getException());
                             Library.logDebug("signInWithEmail:failed" + task.getException());
                         }else {
-                            Intent i = new Intent(LoginActivity.this,EventsActivity.class);
-                            startActivity(i);
-                            overridePendingTransition(R.anim.activity_slide_left_in,
-                                    R.anim.activity_slide_left_out);
+                            createAnEvent(mAuth.getCurrentUser().getUid());
+                            FireDBManager.getInstance().getUser(mAuth.getCurrentUser().getUid(), new FireDBManager.UserRetrievalCompletion() {
+                                @Override
+                                public void successfullyRetrieved(User user) {
+                                    mProgressDialog.dismiss();
+                                    Library.logDebug(user.getName());
+                                    Intent i = new Intent(LoginActivity.this,EventsActivity.class);
+                                    startActivity(i);
+                                    overridePendingTransition(R.anim.activity_slide_left_in,
+                                            R.anim.activity_slide_left_out);
+                                }
+
+                                @Override
+                                public void failedToRetrieve(DatabaseError var1) {
+                                    mProgressDialog.dismiss();
+                                }
+                            });
+
                         }
                     }
                 });
     }
 
-    private void signUpWithData() {
-
+    private void throughErrorFor(Exception exception) {
+        if (exception instanceof FirebaseAuthInvalidUserException) {
+            Library.showToastShort(LoginActivity.this, "Please check your email and password");
+        }else if (exception instanceof FirebaseAuthInvalidCredentialsException) {
+            Library.showToastShort(LoginActivity.this, "Please check your email and password");
+        }else {
+            Library.showToastShort(LoginActivity.this, "Login failed, please try again");
+        }
     }
+
+
+
+
+
+
+    private void signUpWithData() {
+        String UID = "gIcfhMTsBjOESdYZS9gyF2tofc32";
+
+        CurrentUser currentUser = new CurrentUser(UID);
+        currentUser.setEmailID("varsim1@gmail.com");
+        currentUser.setName("Varghese Simon");
+        currentUser.setRole("Trainer");
+        currentUser.setPhoneNumber("999999");
+        currentUser.saveUser();
+    }
+
+    private void createAnEvent(String userID) {
+        Event event = new Event(userID);
+        event.setEventStartDate(dateForString("2017-04-23:04:30"));
+        event.setEventType("Swiming");
+        event.setEventEndDate(dateForString("2017-04-23:06:30"));
+        event.createEvent();
+    }
+    private Date dateForString(String dateString) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd:HH:mm");
+        try {
+            return simpleDateFormat.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }
