@@ -6,9 +6,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -58,7 +60,6 @@ public class FireDBManager {
         getmEventDB().child(dateString).child(event.getEventUID()).setValue(event);
     }
 
-
     public void getUser(String userID, final UserRetrievalCompletion userRetrievalCompletion) {
         getmUsersDB().child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -81,16 +82,14 @@ public class FireDBManager {
         getmEventDB().child(dateString).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Map<String, Object> objectMap = (Map<String, Object>)dataSnapshot.getValue();
-
                 ArrayList<Event> eventArrayList = new ArrayList<>();
 
+                Map<String, Object> objectMap = (Map<String, Object>) dataSnapshot.getValue();
                 for (Map.Entry<String, Object> eventData : objectMap.entrySet()) {
                     Event anEvent = new Event(eventData.getKey(), (Map<String, String>) eventData.getValue());
                     eventArrayList.add(anEvent);
                 }
-
-                eventsRetrivevalCompletion.successfullyRetrieved(eventArrayList);
+                eventsRetrivevalCompletion.successfullyRetrievedEventsForDate(eventArrayList);
             }
 
             @Override
@@ -100,7 +99,39 @@ public class FireDBManager {
         });
     }
 
+    public void getAllEventsForUser(String userID, final EventsRetrivevalCompletion eventsRetrivevalCompletion) {
+        getmEventDB().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
+                Map<Date, ArrayList<Event>> dateMap = new HashMap<Date, ArrayList<Event>>();
+                Map<String, Object> serverDateMap = (Map<String, Object>) dataSnapshot.getValue();
+
+                for (Map.Entry<String, Object> aDateMap : serverDateMap.entrySet()) {
+                    try {
+                        Date eventDate = simpleDateFormat.parse(aDateMap.getKey());
+                        ArrayList<Event> eventArrayList = new ArrayList<>();
+                        Map<String, Object> objectMap = (Map<String, Object>) aDateMap.getValue();
+                        for (Map.Entry<String, Object> eventData : objectMap.entrySet()) {
+                            Event anEvent = new Event(eventData.getKey(), (Map<String, String>) eventData.getValue());
+                            eventArrayList.add(anEvent);
+                        }
+                        dateMap.put(eventDate, eventArrayList);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                eventsRetrivevalCompletion.successfullyRetrievedEventsForUser(dateMap);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 
     //Interface declarations
     public interface UserRetrievalCompletion {
@@ -110,7 +141,9 @@ public class FireDBManager {
     }
 
     public interface EventsRetrivevalCompletion {
-        void successfullyRetrieved(ArrayList<Event> user);
+        void successfullyRetrievedEventsForDate(ArrayList<Event> events);
+
+        void successfullyRetrievedEventsForUser(Map<Date, ArrayList<Event>> eventsMap);
 
         void failedToRetrieve(DatabaseError var1);
     }

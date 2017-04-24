@@ -46,13 +46,13 @@ public class DetailListCustomAdapter extends BaseAdapter {
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
         View row = inflater.inflate(R.layout.list_item, parent, false);
 
-        ImageView curent_time_bar = (ImageView) row.findViewById(R.id.current_time_bar);
-        ImageView sport_image = (ImageView) row.findViewById(R.id.sportimage);
-        TextView start_time_text = (TextView) row.findViewById(R.id.start_time_text);
-        TextView end_time_text = (TextView) row.findViewById(R.id.end_time_text);
-        TextView count_text = (TextView) row.findViewById(R.id.count_text);
-        ImageView location_count_image = (ImageView) row.findViewById(R.id.location_count_image);
-        TextView nextarrow_image = (TextView) row.findViewById(R.id.nextarrow_image);
+//        ImageView curent_time_bar = (ImageView) row.findViewById(R.id.current_time_bar);
+//        ImageView sport_image = (ImageView) row.findViewById(R.id.sportimage);
+//        TextView start_time_text = (TextView) row.findViewById(R.id.start_time_text);
+//        TextView end_time_text = (TextView) row.findViewById(R.id.end_time_text);
+//        TextView count_text = (TextView) row.findViewById(R.id.count_text);
+//        ImageView location_count_image = (ImageView) row.findViewById(R.id.location_count_image);
+//        TextView nextarrow_image = (TextView) row.findViewById(R.id.nextarrow_image);
       /*
         if (WebSitePage.website_clickedposition == position) {
             website_name.setTextColor(context.getResources().getColor(R.color.white));

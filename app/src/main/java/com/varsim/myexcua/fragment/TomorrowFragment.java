@@ -18,6 +18,7 @@ import com.varsim.myexcua.model.FireDBManager;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,11 +41,16 @@ public class TomorrowFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FireDBManager.getInstance().getEventsForDate(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000), new FireDBManager.EventsRetrivevalCompletion() {
             @Override
-            public void successfullyRetrieved(ArrayList<Event> eventsList) {
+            public void successfullyRetrievedEventsForDate(ArrayList<Event> eventsList) {
                 eventArrayList = eventsList;
                 todayCustomAdapter.setEventArrayList(eventArrayList);
                 todayCustomAdapter.populateListView();
                 todayCustomAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void successfullyRetrievedEventsForUser(Map<Date, ArrayList<Event>> eventsMap) {
+
             }
 
             @Override
