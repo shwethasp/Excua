@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -99,6 +100,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Library.hideKeyboard(LoginActivity.this);
         switch (v.getId()){
             case R.id.login_btn:
+                InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+
                 String emailText = mEditUsername.getText().toString();
                 String passwordText = mEditPassword.getText().toString();
                 if (validateEmailId(emailText, this)) {
@@ -199,9 +203,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void createAnEvent(String userID) {
         Event event = new Event(userID);
-        event.setEventStartDate(dateForString("2017-04-23:04:30"));
+        event.setEventStartDate(new Date());
         event.setEventType("Swimming");
-        event.setEventEndDate(dateForString("2017-04-23:06:30"));
+        event.setEventEndDate(new Date(System.currentTimeMillis() + 60 * 60 * 1000));
         event.createEvent();
     }
     private Date dateForString(String dateString) {
