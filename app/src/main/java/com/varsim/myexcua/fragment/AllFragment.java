@@ -48,16 +48,9 @@ public class AllFragment extends Fragment {
 
         allCustomAdapter = new AllCustomAdapter(getContext(), mDatasetTypes, mSportImage, mStartTime, mEndTime, count);
         mRecyclerView.setAdapter(allCustomAdapter);
-//        recyclerAdapter = new FirebaseRecyclerAdapter<String, ViewHolder>(String.class, R.layout.) {
-//            @Override
-//            protected void populateViewHolder(ViewHolder viewHolder, String model, int position) {
-//
-//            }
-//        };
 
         return view;
     }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 

@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import com.google.firebase.database.DatabaseError;
 import com.varsim.myexcua.R;
 import com.varsim.myexcua.adapter.TodayCustomAdapter;
-import com.varsim.myexcua.library.Library;
 import com.varsim.myexcua.model.Event;
 import com.varsim.myexcua.model.FireDBManager;
 
@@ -45,13 +44,6 @@ public class TodayFragment extends Fragment {
         FireDBManager.getInstance().getEventsForDate(new Date(), new FireDBManager.EventsRetrivevalCompletion() {
             @Override
             public void successfullyRetrieved(ArrayList<Event> eventsList) {
-                Library.logDebug(""+eventsList);
-                for (Event anEvent: eventsList) {
-                    Library.logDebug(anEvent.getEventCreaterUID());
-                    Library.logDebug(anEvent.getEventType());
-                    Library.logDebug(anEvent.getEventUID());
-                    Library.logDebug(anEvent.getEventStartDateString());
-                }
                 eventArrayList = eventsList;
                 todayCustomAdapter.setEventArrayList(eventArrayList);
                 todayCustomAdapter.populateListView();
@@ -69,7 +61,7 @@ public class TodayFragment extends Fragment {
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(false);
 
-        todayCustomAdapter = new TodayCustomAdapter(getActivity(), mDatasetTypes, eventArrayList);
+        todayCustomAdapter = new TodayCustomAdapter(getActivity(), mDatasetTypes, eventArrayList, new Date());
         mRecyclerView.setAdapter(todayCustomAdapter);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -77,6 +69,4 @@ public class TodayFragment extends Fragment {
 
         return view;
     }
-
-
 }

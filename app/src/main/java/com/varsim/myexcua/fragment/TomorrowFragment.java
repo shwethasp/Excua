@@ -10,23 +10,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.DatabaseError;
 import com.varsim.myexcua.R;
-import com.varsim.myexcua.adapter.TomorrowCustomAdapter;
+import com.varsim.myexcua.adapter.TodayCustomAdapter;
+import com.varsim.myexcua.model.Event;
+import com.varsim.myexcua.model.FireDBManager;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class TomorrowFragment extends Fragment {
-
-    public static final int TomorrowLocation = 0;
-    public static final int TomorrowDetails = 1;
+    public static final int TodayLocation = 0;
+    public static final int TodayDetails = 1;
     private ProgressDialog authDialog;
-    private static final String TAG = TomorrowFragment.class.getCanonicalName();
-    private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
-    TomorrowCustomAdapter tomorrowCustomAdapter;
-    private int mDatasetTypes[] = {TomorrowLocation, TomorrowDetails};
-    private String[] mDataset = new String[3];
+    private static final String TAG = TodayFragment.class.getCanonicalName();
+    TodayCustomAdapter todayCustomAdapter;
+    private int mDatasetTypes[] = {TodayLocation, TodayDetails};
+    private ArrayList<Event> eventArrayList = new ArrayList<>();
 
     public TomorrowFragment() {
         // Required empty public constructor
@@ -34,20 +37,33 @@ public class TomorrowFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        FireDBManager.getInstance().getEventsForDate(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000), new FireDBManager.EventsRetrivevalCompletion() {
+            @Override
+            public void successfullyRetrieved(ArrayList<Event> eventsList) {
+                eventArrayList = eventsList;
+                todayCustomAdapter.setEventArrayList(eventArrayList);
+                todayCustomAdapter.populateListView();
+                todayCustomAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void failedToRetrieve(DatabaseError var1) {
+
+            }
+        });
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_tomorrow, container, false);
+        View view = inflater.inflate(R.layout.fragment_today, container, false);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.tomorrow_recyclerView);
-      // mRecyclerView.setHasFixedSize(true);
+        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        mRecyclerView.setHasFixedSize(false);
 
-        tomorrowCustomAdapter = new TomorrowCustomAdapter(getActivity(), mDatasetTypes, mDataset);
-        mRecyclerView.setAdapter(tomorrowCustomAdapter);
+        todayCustomAdapter = new TodayCustomAdapter(getActivity(), mDatasetTypes, eventArrayList, new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000));
+        mRecyclerView.setAdapter(todayCustomAdapter);
 
-        mLayoutManager = new LinearLayoutManager(getActivity());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
+
         return view;
     }
-
 }

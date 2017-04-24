@@ -2,16 +2,13 @@ package com.varsim.myexcua.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.varsim.myexcua.R;
-import com.varsim.myexcua.fragment.TomorrowFragment;
 
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
@@ -80,74 +77,74 @@ public class TomorrowCustomAdapter extends RecyclerView.Adapter<TomorrowCustomAd
     public TomorrowCustomAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v;
 
-        if (viewType == TomorrowFragment.TomorrowLocation) {
-            v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.tomorrow_location_card, parent, false);
-            return new TomorrowCustomAdapter.TomorrowLocationsViewHolder(v);
-
-        } else if (viewType == TomorrowFragment.TomorrowDetails) {
-            v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.tomorrow_details_card, parent, false);
-            return new TomorrowCustomAdapter.TomorrowDetailsViewHolder(v);
-        } else {
+//        if (viewType == TomorrowFragment.TomorrowLocation) {
+//            v = LayoutInflater.from(parent.getContext())
+//                    .inflate(R.layout.tomorrow_location_card, parent, false);
+//            return new TomorrowCustomAdapter.TomorrowLocationsViewHolder(v);
+//
+//        } else if (viewType == TomorrowFragment.TomorrowDetails) {
+//            v = LayoutInflater.from(parent.getContext())
+//                    .inflate(R.layout.tomorrow_details_card, parent, false);
+//            return new TomorrowCustomAdapter.TomorrowDetailsViewHolder(v);
+//        } else {
             return null;
-        }
+//        }
     }
 
     @Override
     public void onBindViewHolder(TomorrowCustomAdapter.ViewHolder holder, int position) {
 
         //    if (Connectivity.isConnected(mContext)) {
-        if (holder.getItemViewType() == TomorrowFragment.TomorrowLocation) {
-
-            final TomorrowCustomAdapter.TomorrowLocationsViewHolder viewholder = (TomorrowCustomAdapter.TomorrowLocationsViewHolder) holder;
-
-            //  String[] startDatearray = mDataSet[0].split("-");
-            //String[] endDatearray = mDataSet[1].split("-");
-            // viewholder.date_text.setText(startDatearray[2] + "-" + getMonthName(Integer.parseInt(startDatearray[1])).substring(0, 3).toUpperCase() + "-" + startDatearray[0]);
-            //viewholder.end_date.setText(endDatearray[2] + "-" + getMonthName(Integer.parseInt(endDatearray[1])).substring(0, 3).toUpperCase() + "-" + endDatearray[0]);
-            viewholder.date_text.setText("15 March,2017");
-            viewholder.day_text.setText("Wednesday");
-
-        } else if (holder.getItemViewType() == TomorrowFragment.TomorrowDetails) {
-            TomorrowCustomAdapter.TomorrowDetailsViewHolder viewholder = (TomorrowCustomAdapter.TomorrowDetailsViewHolder) holder;
-
-            sporticon.add(R.mipmap.ic_swim);
-            sporticon.add(R.mipmap.ic_swim);
-            sporticon.add(R.mipmap.ic_swim);
-            sporticon.add(R.mipmap.ic_swim);
-
-            startTime.add("10:00 AM");
-            startTime.add("11:00 AM");
-            startTime.add("12:15 PM");
-            startTime.add("12:15 PM");
-
-
-            endTime.add("10:50 AM");
-            endTime.add("12:10 PM");
-            endTime.add("2:15 PM");
-            endTime.add("2:15 PM");
-
-            locationNumberIcon.add(R.mipmap.ic_location_pin);
-            locationNumberIcon.add(R.mipmap.ic_location_pin);
-            locationNumberIcon.add(R.mipmap.ic_location_pin);
-            locationNumberIcon.add(R.mipmap.ic_location_pin);
-
-
-            // Create custom adapter object ( see below CustomAdapter.java )
-            detailListTomorrowCustomAdapter = new DetailListTomorrowCustomAdapter(mContext, sporticon, startTime, endTime, locationNumberIcon);
-            mListView.setAdapter(detailListTomorrowCustomAdapter);
-            mListView.setFocusable(false);
-            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    //mListener.onItemSelected(mSettingsListArray[i], i);
-                }
-            });
-        }
-        // } else {
-        //    Snackbar.make(holder.itemView, "Lost Internet connection", Snackbar.LENGTH_LONG).show();
-        //}
+//        if (holder.getItemViewType() == TomorrowFragment.TomorrowLocation) {
+//
+//            final TomorrowCustomAdapter.TomorrowLocationsViewHolder viewholder = (TomorrowCustomAdapter.TomorrowLocationsViewHolder) holder;
+//
+//            //  String[] startDatearray = mDataSet[0].split("-");
+//            //String[] endDatearray = mDataSet[1].split("-");
+//            // viewholder.date_text.setText(startDatearray[2] + "-" + getMonthName(Integer.parseInt(startDatearray[1])).substring(0, 3).toUpperCase() + "-" + startDatearray[0]);
+//            //viewholder.end_date.setText(endDatearray[2] + "-" + getMonthName(Integer.parseInt(endDatearray[1])).substring(0, 3).toUpperCase() + "-" + endDatearray[0]);
+//            viewholder.date_text.setText("15 March,2017");
+//            viewholder.day_text.setText("Wednesday");
+//
+//        } else if (holder.getItemViewType() == TomorrowFragment.TomorrowDetails) {
+//            TomorrowCustomAdapter.TomorrowDetailsViewHolder viewholder = (TomorrowCustomAdapter.TomorrowDetailsViewHolder) holder;
+//
+//            sporticon.add(R.mipmap.ic_swim);
+//            sporticon.add(R.mipmap.ic_swim);
+//            sporticon.add(R.mipmap.ic_swim);
+//            sporticon.add(R.mipmap.ic_swim);
+//
+//            startTime.add("10:00 AM");
+//            startTime.add("11:00 AM");
+//            startTime.add("12:15 PM");
+//            startTime.add("12:15 PM");
+//
+//
+//            endTime.add("10:50 AM");
+//            endTime.add("12:10 PM");
+//            endTime.add("2:15 PM");
+//            endTime.add("2:15 PM");
+//
+//            locationNumberIcon.add(R.mipmap.ic_location_pin);
+//            locationNumberIcon.add(R.mipmap.ic_location_pin);
+//            locationNumberIcon.add(R.mipmap.ic_location_pin);
+//            locationNumberIcon.add(R.mipmap.ic_location_pin);
+//
+//
+//            // Create custom adapter object ( see below CustomAdapter.java )
+//            detailListTomorrowCustomAdapter = new DetailListTomorrowCustomAdapter(mContext, sporticon, startTime, endTime, locationNumberIcon);
+//            mListView.setAdapter(detailListTomorrowCustomAdapter);
+//            mListView.setFocusable(false);
+//            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                @Override
+//                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                    //mListener.onItemSelected(mSettingsListArray[i], i);
+//                }
+//            });
+//        }
+//        // } else {
+//        //    Snackbar.make(holder.itemView, "Lost Internet connection", Snackbar.LENGTH_LONG).show();
+//        //}
     }
 
 

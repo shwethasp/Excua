@@ -207,6 +207,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         event.setEventType("Swimming");
         event.setEventEndDate(new Date(System.currentTimeMillis() + 60 * 60 * 1000));
         event.createEvent();
+
+        Event event2 = new Event(userID);
+        event2.setEventStartDate(new Date(System.currentTimeMillis() + 23 * 60 * 60 * 1000));
+        event2.setEventType("Swimming");
+        event2.setEventEndDate(new Date(System.currentTimeMillis() + 60 * 60 * 1000));
+        event2.createEvent();
     }
     private Date dateForString(String dateString) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd:HH:mm");
