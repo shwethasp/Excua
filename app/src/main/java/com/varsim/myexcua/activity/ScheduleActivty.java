@@ -35,209 +35,208 @@ import java.util.Calendar;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ScheduleActivty extends AppCompatActivity implements View.OnClickListener {
-    private ScheduleAdapter mScheduleAdapter;
-    private ListView mListView;
-    ArrayList<AttendanceModel> attendanceModelArray = new ArrayList<AttendanceModel>();
-    private Spinner mRepetitionSpinner;
+  private ScheduleAdapter mScheduleAdapter;
+  private ListView mListView;
+  ArrayList<AttendanceModel> attendanceModelArray = new ArrayList<AttendanceModel>();
+  private Spinner mRepetitionSpinner;
 
-    private LinearLayout mSetDateLayout;
-    private LinearLayout mSetStartsOnLayout;
-    private LinearLayout mSetEndsOnLayout;
-    private static TextView mDateText;
-    private static TextView mStartText;
-    private static TextView mEndText;
-    static final int TIME_DIALOG_ID = 01;
-    private static final int TIME_DIALOG_ID1 = 02;
-    private int hour;
-    private int minute;
+  private LinearLayout mSetDateLayout;
+  private LinearLayout mSetStartsOnLayout;
+  private LinearLayout mSetEndsOnLayout;
+  private static TextView mDateText;
+  private static TextView mStartText;
+  private static TextView mEndText;
+  static final int TIME_DIALOG_ID = 01;
+  private static final int TIME_DIALOG_ID1 = 02;
+  private int hour;
+  private int minute;
 
-    private TimePickerDialog.OnTimeSetListener mTimeSetListener;
+  private TimePickerDialog.OnTimeSetListener mTimeSetListener;
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+  @Override
+  protected void attachBaseContext(Context newBase) {
+    super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+  }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_schedule_activty);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_schedule_activty);
+    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+    setSupportActionBar(toolbar);
+    if (toolbar != null) {
+      setSupportActionBar(toolbar);
+      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //            getSupportActionBar().setTitle("04, Mar 2017");
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
+      getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-            TextView titleView = (TextView) findViewById(R.id.toolbar_text);
-            titleView.setText("Add an Event");
-        }
-
-        initializeui();
-        mSetDateLayout.setOnClickListener(this);
-        mSetStartsOnLayout.setOnClickListener(this);
-        mSetEndsOnLayout.setOnClickListener(this);
-
-        ArrayList<String> mParticipantName = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.participants)));
-
-        for (int i = 0; i < mParticipantName.size(); i++) {
-
-            AttendanceModel attendanceModel = new AttendanceModel();
-            attendanceModel.setName(mParticipantName.get(i));
-
-            attendanceModelArray.add(attendanceModel);
-            Log.d("VARSIM99", "Name = " + attendanceModel.getName());
-        }
-
-        // Create custom adapter object
-        mScheduleAdapter = new ScheduleAdapter(getApplicationContext(), attendanceModelArray);
-        mListView.setAdapter(mScheduleAdapter);
-        setListViewHeightBasedOnChildren(mListView);
-        mListView.setFocusable(false);
-        mListView.setTextFilterEnabled(true);
-
-        ArrayAdapter<String> repetitionArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.repetition_array));
-        repetitionArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        mRepetitionSpinner.setAdapter(repetitionArray);
-
-        mRepetitionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                ((TextView) adapterView.getChildAt(0)).setGravity(Gravity.CENTER);
-                ((TextView) adapterView.getChildAt(0)).setTextColor(getResources().getColor(R.color.dark_green));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        /** Get the current time */
-        final Calendar cal = Calendar.getInstance();
-        hour = cal.get(Calendar.HOUR_OF_DAY);
-        minute = cal.get(Calendar.MINUTE);
+      TextView titleView = (TextView) findViewById(R.id.toolbar_text);
+      titleView.setText("Add an Event");
     }
 
+    initializeui();
+    mSetDateLayout.setOnClickListener(this);
+    mSetStartsOnLayout.setOnClickListener(this);
+    mSetEndsOnLayout.setOnClickListener(this);
 
-    private void initializeui() {
-        mListView = (ListView) findViewById(R.id.schedule_participant_listview);
+    ArrayList<String> mParticipantName = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.participants)));
 
-        mDateText = (TextView) findViewById(R.id.date_text);
-        mStartText = (TextView) findViewById(R.id.start_text);
-        mEndText =(TextView)findViewById(R.id.end_text);
+    for (int i = 0; i < mParticipantName.size(); i++) {
 
-        mSetDateLayout = (LinearLayout)findViewById(R.id.setdate_layout);
-        mSetStartsOnLayout = (LinearLayout) findViewById(R.id.set_starton_layout);
-        mSetEndsOnLayout = (LinearLayout) findViewById(R.id.set_endson_layout);
-        mRepetitionSpinner = (Spinner) findViewById(R.id.repetition_spinner);
+      AttendanceModel attendanceModel = new AttendanceModel();
+      attendanceModel.setName(mParticipantName.get(i));
 
-
+      attendanceModelArray.add(attendanceModel);
+      Log.d("VARSIM99", "Name = " + attendanceModel.getName());
     }
 
-    /****
-     * Method for Setting the Height of the ListView dynamically.
-     * *** Hack to fix the issue of not showing all the items of the ListView
-     * *** when placed inside a ScrollView
-     ****/
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null)
-            return;
+    // Create custom adapter object
+    mScheduleAdapter = new ScheduleAdapter(getApplicationContext(), attendanceModelArray);
+    mListView.setAdapter(mScheduleAdapter);
+    setListViewHeightBasedOnChildren(mListView);
+    mListView.setFocusable(false);
+    mListView.setTextFilterEnabled(true);
 
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
-        int totalHeight = 0;
-        View view = null;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            view = listAdapter.getView(i, view, listView);
-            if (i == 0)
-                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, LinearLayout.LayoutParams.WRAP_CONTENT));
-            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight += view.getMeasuredHeight();
-        }
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        listView.setLayoutParams(params);
+    ArrayAdapter<String> repetitionArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.repetition_array));
+    repetitionArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+    mRepetitionSpinner.setAdapter(repetitionArray);
+
+    mRepetitionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+      public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        ((TextView) adapterView.getChildAt(0)).setGravity(Gravity.CENTER);
+        ((TextView) adapterView.getChildAt(0)).setTextColor(getResources().getColor(R.color.dark_green));
+      }
+
+      @Override
+      public void onNothingSelected(AdapterView<?> parent) {
+
+      }
+    });
+
+    /** Get the current time */
+    final Calendar cal = Calendar.getInstance();
+    hour = cal.get(Calendar.HOUR_OF_DAY);
+    minute = cal.get(Calendar.MINUTE);
+  }
+
+
+  private void initializeui() {
+    mListView = (ListView) findViewById(R.id.schedule_participant_listview);
+
+    mDateText = (TextView) findViewById(R.id.date_text);
+    mStartText = (TextView) findViewById(R.id.start_text);
+    mEndText = (TextView) findViewById(R.id.end_text);
+
+    mSetDateLayout = (LinearLayout) findViewById(R.id.setdate_layout);
+    mSetStartsOnLayout = (LinearLayout) findViewById(R.id.set_starton_layout);
+    mSetEndsOnLayout = (LinearLayout) findViewById(R.id.set_endson_layout);
+    mRepetitionSpinner = (Spinner) findViewById(R.id.repetition_spinner);
+
+
+  }
+
+  /****
+   * Method for Setting the Height of the ListView dynamically.
+   * *** Hack to fix the issue of not showing all the items of the ListView
+   * *** when placed inside a ScrollView
+   ****/
+  public static void setListViewHeightBasedOnChildren(ListView listView) {
+    ListAdapter listAdapter = listView.getAdapter();
+    if (listAdapter == null)
+      return;
+
+    int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+    int totalHeight = 0;
+    View view = null;
+    for (int i = 0; i < listAdapter.getCount(); i++) {
+      view = listAdapter.getView(i, view, listView);
+      if (i == 0)
+        view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, LinearLayout.LayoutParams.WRAP_CONTENT));
+      view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+      totalHeight += view.getMeasuredHeight();
     }
+    ViewGroup.LayoutParams params = listView.getLayoutParams();
+    params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+    listView.setLayoutParams(params);
+  }
+
+  @Override
+  public void onClick(View v) {
+    switch (v.getId()) {
+      case R.id.setdate_layout:
+        OpenDatePickerDialog();
+        break;
+
+      case R.id.set_starton_layout:
+        OpenTimePickerDialog(mStartText);
+        break;
+
+      case R.id.set_endson_layout:
+        OpenTimePickerDialog(mEndText);
+        break;
+
+    }
+  }
+
+
+  private void OpenDatePickerDialog() {
+    DialogFragment newFragment = new DatePickerFragment();
+    newFragment.show(getSupportFragmentManager(), "datePicker");
+  }
+
+
+  public static class DatePickerFragment extends DialogFragment implements
+          DatePickerDialog.OnDateSetListener {
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.setdate_layout:
-                OpenDatePickerDialog();
-                break;
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+      // Use the current date as the default date in the picker
+      final Calendar c = Calendar.getInstance();
+      int year = c.get(Calendar.YEAR);
+      int month = c.get(Calendar.MONTH);
+      int day = c.get(Calendar.DAY_OF_MONTH);
 
-            case R.id.set_starton_layout:
-                OpenTimePickerDialog(mStartText);
-                break;
-
-            case R.id.set_endson_layout:
-                OpenTimePickerDialog(mEndText);
-                break;
-
-        }
+      // Create a new instance of DatePickerDialog and return it
+      return new DatePickerDialog(getActivity(), this, year, month, day);
     }
 
-
-    private void OpenDatePickerDialog() {
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
+    public void onDateSet(DatePicker view, int year, int month, int day) {
+      // Do something with the date chosen by the user
+      mDateText.setText(day + "/" + (month + 1) + "/" + year);
     }
+  }
 
 
-    public static class DatePickerFragment extends DialogFragment implements
-            DatePickerDialog.OnDateSetListener {
+  private void OpenTimePickerDialog(final TextView textView) {
+    // Get Current Time
+    final Calendar c = Calendar.getInstance();
+    final int mHour = c.get(Calendar.HOUR_OF_DAY);
+    final int mMinute = c.get(Calendar.MINUTE);
+    final int mSeconds = c.get(Calendar.SECOND);
+    // Launch Time Picker Dialog with hours,minutes
+    TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+            new TimePickerDialog.OnTimeSetListener() {
 
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current date as the default date in the picker
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
+              @Override
+              public void onTimeSet(TimePicker view, int hourOfDay,
+                                    int minute) {
 
-            // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
-        }
+                textView.setText(hourOfDay + ":" + minute);
 
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            // Do something with the date chosen by the user
-            mDateText.setText(day + "/" + (month + 1) + "/" + year);
-        }
+              }
+            }, mHour, mMinute, false);
+    timePickerDialog.show();
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem menuItem) {
+    switch (menuItem.getItemId()) {
+      case android.R.id.home:
+        Intent homeIntent = new Intent(this, EventsActivity.class);
+        homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(homeIntent);
     }
-
-
-
-    private void OpenTimePickerDialog(final TextView textView) {
-        // Get Current Time
-        final Calendar c = Calendar.getInstance();
-        final int mHour = c.get(Calendar.HOUR_OF_DAY);
-        final int mMinute = c.get(Calendar.MINUTE);
-        final int mSeconds = c.get(Calendar.SECOND);
-        // Launch Time Picker Dialog with hours,minutes
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this,
-                new TimePickerDialog.OnTimeSetListener() {
-
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay,
-                                          int minute) {
-
-                            textView.setText(hourOfDay+":"+minute);
-
-                    }
-                }, mHour, mMinute, false);
-        timePickerDialog.show();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case android.R.id.home:
-                Intent homeIntent = new Intent(this, EventsActivity.class);
-                homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(homeIntent);
-        }
-        return (super.onOptionsItemSelected(menuItem));
-    }
+    return (super.onOptionsItemSelected(menuItem));
+  }
 }
