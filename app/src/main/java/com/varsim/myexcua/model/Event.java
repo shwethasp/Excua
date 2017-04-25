@@ -20,6 +20,8 @@ public class Event {
     private Date eventStartDate;
     private Date eventEndDate;
 
+
+
     private String eventStartDateString;
     private String eventEndDateString;
 
@@ -27,9 +29,7 @@ public class Event {
     private FireDBManager fireDBM = FireDBManager.getInstance();
     @Exclude
     private SimpleDateFormat simpleDateFormat;
-    public Event() {
-
-    }
+    public Event() {}
 
     public Event(String eventCreaterUID) {
         this.eventCreaterUID = eventCreaterUID;

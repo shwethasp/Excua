@@ -152,7 +152,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             throughErrorFor(task.getException());
                             Library.logDebug("signInWithEmail:failed" + task.getException());
                         }else {
-                            createAnEvent(mAuth.getCurrentUser().getUid());
+//                            createAnEvent(mAuth.getCurrentUser().getUid());
                             FireDBManager.getInstance().getUser(mAuth.getCurrentUser().getUid(), new FireDBManager.UserRetrievalCompletion() {
                                 @Override
                                 public void successfullyRetrieved(User user) {
