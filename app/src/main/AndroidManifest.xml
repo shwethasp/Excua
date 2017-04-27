@@ -60,7 +60,7 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".activity.ScheduleActivty"
+            android:name=".activity.CreateEventActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_schedule_activty"
             android:theme="@style/AppTheme.NoActionBar"

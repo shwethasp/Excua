@@ -48,7 +48,7 @@ public class EventsActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(EventsActivity.this, ScheduleActivty.class);
+                Intent i = new Intent(EventsActivity.this, CreateEventActivity.class);
                 startActivity(i);
             }
         });

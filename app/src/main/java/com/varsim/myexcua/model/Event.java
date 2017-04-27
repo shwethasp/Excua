@@ -20,7 +20,6 @@ public class Event {
   private Date eventStartDate;
   private Date eventEndDate;
 
-
   private String eventStartDateString;
   private String eventEndDateString;
 
@@ -53,8 +52,18 @@ public class Event {
   }
 
 
-  public void createEvent() {
-    FireDBManager.getInstance().createEvent(this);
+  public void createEvent(final FireDBManager.EventCreationCompletion listner) {
+    FireDBManager.getInstance().createEvent(this, new FireDBManager.EventCreationCompletion() {
+      @Override
+      public void successfullyCreateEvent(Event event) {
+        listner.successfullyCreateEvent(event);
+      }
+
+      @Override
+      public void failedToCreateEvent() {
+        listner.failedToCreateEvent();
+      }
+    });
   }
 
   //    Start of locators

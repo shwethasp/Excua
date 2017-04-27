@@ -1,5 +1,9 @@
 package com.varsim.myexcua.model;
 
+import android.support.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -55,9 +59,19 @@ public class FireDBManager {
     getmUsersDB().child(user.getuID()).setValue(user);
   }
 
-  public void createEvent(Event event) {
+  public void createEvent(final Event event, final EventCreationCompletion listner) {
     String dateString = event.getEventStartDateString().split("T")[0];
-    getmEventDB().child(dateString).child(event.getEventUID()).setValue(event);
+    getmEventDB().child(dateString).child(event.getEventUID()).setValue(event)
+            .addOnCompleteListener(new OnCompleteListener<Void>() {
+              @Override
+              public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                  listner.successfullyCreateEvent(event);
+                }else {
+                  listner.failedToCreateEvent();
+                }
+              }
+            });
   }
 
   public void getUser(String userID, final UserRetrievalCompletion userRetrievalCompletion) {
@@ -146,5 +160,11 @@ public class FireDBManager {
     void successfullyRetrievedEventsForUser(Map<Date, ArrayList<Event>> eventsMap);
 
     void failedToRetrieve(DatabaseError var1);
+  }
+
+  public interface EventCreationCompletion {
+    void successfullyCreateEvent(Event event);
+
+    void failedToCreateEvent();
   }
 }

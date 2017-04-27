@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.varsim.myexcua.activity.ScheduleActivty">
+    tools:context="com.varsim.myexcua.activity.CreateEventActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -34,19 +34,23 @@
                     android:textColor="@color/white"
                     android:layout_marginRight="15dp"
                     android:textAllCaps="false"/>
-                <ImageView
-                    android:layout_width="20dp"
+                <Button
+                    android:id="@+id/btn_save"
+                    android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:src="@mipmap/ic_menu_done"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"/>
+                    android:layout_marginRight="10dp"
+                    android:text="Save"
+                    android:textAllCaps="false"
+                    android:background="#00000000"
+                    style="@style/ModerateNormal.White"/>
             </RelativeLayout>
             </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_schedule_activty" />
+    <include layout="@layout/content_create_event_activty" />
 
 
 

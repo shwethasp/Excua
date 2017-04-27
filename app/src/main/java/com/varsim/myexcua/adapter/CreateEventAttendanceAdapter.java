@@ -18,14 +18,14 @@ import java.util.ArrayList;
  * Created by varsi on 26-03-2017.
  */
 
-public class ScheduleAdapter extends BaseAdapter {
+public class CreateEventAttendanceAdapter extends BaseAdapter {
 
     private ArrayList<AttendanceModel> mScheduleData;
     private Context mContext;
     LayoutInflater inflater;
 
 
-    public ScheduleAdapter(Context context, ArrayList<AttendanceModel> mScheduleData) {
+    public CreateEventAttendanceAdapter(Context context, ArrayList<AttendanceModel> mScheduleData) {
         this.mContext = context;
         this.mScheduleData = mScheduleData;
         inflater = (LayoutInflater.from(context));
@@ -48,11 +48,11 @@ public class ScheduleAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final ScheduleAdapter.ViewHolder viewHolder; // view lookup cache stored in tag
+        final CreateEventAttendanceAdapter.ViewHolder viewHolder; // view lookup cache stored in tag
         final View result;
 
         if (convertView == null) {
-            viewHolder = new ScheduleAdapter.ViewHolder();
+            viewHolder = new CreateEventAttendanceAdapter.ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(mContext);
             result = inflater.inflate(R.layout.schedule_participant_listitem, parent, false);
             viewHolder.name = (TextView) result.findViewById(R.id.participant_name);
@@ -60,7 +60,7 @@ public class ScheduleAdapter extends BaseAdapter {
 
             result.setTag(viewHolder);
         } else {
-            viewHolder = (ScheduleAdapter.ViewHolder) convertView.getTag();
+            viewHolder = (CreateEventAttendanceAdapter.ViewHolder) convertView.getTag();
             result = convertView;
         }
 
