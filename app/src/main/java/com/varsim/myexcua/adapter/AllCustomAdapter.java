@@ -8,11 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.varsim.myexcua.R;
 import com.varsim.myexcua.activity.TodayAttendanceActivity;
-import com.varsim.myexcua.fragment.AllFragment;
 import com.varsim.myexcua.model.Event;
 
 import java.text.SimpleDateFormat;
@@ -28,14 +28,13 @@ public class AllCustomAdapter extends RecyclerView.Adapter<AllCustomAdapter.View
 
     //    private LayoutInflater inflater;
     private Context mContext;
-    private int[] mDatasetTypes;
     private Map<Date, ArrayList<Event>> allEventsMap;
     private ArrayList<Date> dateArrayList;
     private SimpleDateFormat simpleDateFormat;
-//    ArrayList<Integer> mSportImage = new ArrayList<>();
-//    ArrayList<String> mStartTime = new ArrayList<>();
-//    ArrayList<String> mEndTime = new ArrayList<>();
-//    int count;
+    private boolean isDataLoading = true;
+
+    private final int VIEW_TYPE_LOADING = 0;
+    private final int VIEW_TYPE_EVENTS = 1;
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -44,28 +43,22 @@ public class AllCustomAdapter extends RecyclerView.Adapter<AllCustomAdapter.View
         }
     }
 
-    @Override
-    public int getItemCount() {
-        if (dateArrayList.size() == 0){
-            return 0;
-        };
-        return 1;
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return mDatasetTypes[position];
+    private class LoadingViewHolder extends ViewHolder {
+        private ProgressBar progressBar;
+        public LoadingViewHolder(View itemView) {
+            super(itemView);
+            progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar1);
+        }
     }
 
     public class AllViewHolder extends AllCustomAdapter.ViewHolder {
         //  TextView day_text, date_text;
-        LinearLayout mAllDateRangeDyanamicLayout, mAllListActivitiesDynamicLayout;
-
+        LinearLayout mAllDateRangeDynamicLayout, mAllListActivitiesDynamicLayout;
 
         public AllViewHolder(View v) {
             super(v);
 
-            this.mAllDateRangeDyanamicLayout = (LinearLayout) v.findViewById(R.id.all_daterange_dynamic_layout);
+            this.mAllDateRangeDynamicLayout = (LinearLayout) v.findViewById(R.id.all_daterange_dynamic_layout);
             mAllListActivitiesDynamicLayout = (LinearLayout) v.findViewById(R.id.all_listactivities_dyanamic_layout);
 
         }
@@ -74,45 +67,47 @@ public class AllCustomAdapter extends RecyclerView.Adapter<AllCustomAdapter.View
     /*************
      * Constructor
      *****************/
-    public AllCustomAdapter(Context applicationContext, int mDatasetTypes[], ArrayList<Date> dateArrayList, Map<Date, ArrayList<Event>> allEventsMap) {
-
+    public AllCustomAdapter(Context applicationContext, ArrayList<Date> dateArrayList, Map<Date, ArrayList<Event>> allEventsMap) {
         this.mContext = applicationContext;
-        this.mDatasetTypes = mDatasetTypes;
         this.allEventsMap = allEventsMap;
         this.dateArrayList = dateArrayList;
 //        inflater = (LayoutInflater.from(applicationContext));
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
     }
 
     @Override
-    public AllCustomAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public int getItemCount() {
+        if (dateArrayList.size() == 0 && !isDataLoading){
+            return 0;
+        };
+        return 1;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return isDataLoading ? VIEW_TYPE_LOADING : VIEW_TYPE_EVENTS;
+    }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v;
 
-        if (viewType == AllFragment.ALL_ACTIVITY) {
+        if (viewType == VIEW_TYPE_EVENTS) {
             v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.all_dynamic_layouts, parent, false);
             return new AllCustomAdapter.AllViewHolder(v);
-
+        } else if (viewType == VIEW_TYPE_LOADING) {
+            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_loading_item, parent,  false);
+            return new LoadingViewHolder(v);
         } else {
             return null;
         }
     }
-
-    public void setAllEventsMap(Map<Date, ArrayList<Event>> allEventsMap) {
-        this.allEventsMap = allEventsMap;
-    }
-
-    public void setDateArrayList(ArrayList<Date> dateArrayList) {
-        this.dateArrayList = dateArrayList;
-    }
-
     @Override
     public void onBindViewHolder(AllCustomAdapter.ViewHolder holder, int position) {
 
         //    if (Connectivity.isConnected(mContext)) {
-        if (holder.getItemViewType() == AllFragment.ALL_ACTIVITY) {
-
+        if (holder.getItemViewType() == VIEW_TYPE_EVENTS) {
             final AllCustomAdapter.AllViewHolder viewholder = (AllCustomAdapter.AllViewHolder) holder;
 
             for (int j = 0; j < dateArrayList.size(); j++) {
@@ -134,7 +129,7 @@ public class AllCustomAdapter extends RecyclerView.Adapter<AllCustomAdapter.View
 
                 if (dynamicDateview.getParent() != null)
                     ((ViewGroup) dynamicDateview.getParent()).removeView(dynamicDateview);
-                viewholder.mAllDateRangeDyanamicLayout.addView(dynamicDateview);
+                viewholder.mAllDateRangeDynamicLayout.addView(dynamicDateview);
 
                 ArrayList<Event> eventsList = allEventsMap.get(dateArrayList.get(j));
                 for (int k = 0; k < eventsList.size(); k++) {
@@ -160,7 +155,7 @@ public class AllCustomAdapter extends RecyclerView.Adapter<AllCustomAdapter.View
                     if (dynamicActivityview.getParent() != null)
                         ((ViewGroup) dynamicActivityview.getParent()).removeView(dynamicActivityview);
 
-                    viewholder.mAllDateRangeDyanamicLayout.addView(dynamicActivityview);
+                    viewholder.mAllDateRangeDynamicLayout.addView(dynamicActivityview);
                     dynamicActivityview.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -170,8 +165,19 @@ public class AllCustomAdapter extends RecyclerView.Adapter<AllCustomAdapter.View
                     });
                 }
             }
-
         }
+    }
 
+    public void setAllEventsMap(Map<Date, ArrayList<Event>> allEventsMap) {
+        this.allEventsMap = allEventsMap;
+    }
+
+    public void setDateArrayList(ArrayList<Date> dateArrayList) {
+        this.dateArrayList = dateArrayList;
+    }
+
+     public void setDataLoading(boolean dataLoading) {
+        isDataLoading = dataLoading;
+        this.notifyItemChanged(0);
     }
 }

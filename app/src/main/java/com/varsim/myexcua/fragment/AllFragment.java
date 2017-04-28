@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseError;
 import com.varsim.myexcua.R;
 import com.varsim.myexcua.adapter.AllCustomAdapter;
@@ -26,12 +25,8 @@ import java.util.Map;
  */
 public class AllFragment extends Fragment {
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
     AllCustomAdapter allCustomAdapter;
     public static final int ALL_ACTIVITY = 0;
-    private int mDatasetTypes[] = {ALL_ACTIVITY};
-    private FirebaseRecyclerAdapter<String, ViewHolder> recyclerAdapter;
     private ArrayList<Date> sortedDateList = new ArrayList<>(0);
     private Map<Date, ArrayList<Event>> allEventsMap;
 
@@ -42,17 +37,22 @@ public class AllFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_all, container, false);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.all_recyclerView);
-        mLayoutManager = new LinearLayoutManager(getActivity());
+        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.all_recyclerView);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        allCustomAdapter = new AllCustomAdapter(getContext(), mDatasetTypes, sortedDateList, allEventsMap);
+        allCustomAdapter = new AllCustomAdapter(getContext(), sortedDateList, allEventsMap);
         mRecyclerView.setAdapter(allCustomAdapter);
+        return view;
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        allCustomAdapter.setDataLoading(true);
         FireDBManager.getInstance().getAllEventsForUser("", new FireDBManager.EventsRetrivevalCompletion() {
             @Override
             public void successfullyRetrievedEventsForDate(ArrayList<Event> events) {
@@ -66,22 +66,14 @@ public class AllFragment extends Fragment {
                 Collections.sort(AllFragment.this.sortedDateList);
                 allCustomAdapter.setAllEventsMap(allEventsMap);
                 allCustomAdapter.setDateArrayList(AllFragment.this.sortedDateList);
-                allCustomAdapter.notifyDataSetChanged();
+                allCustomAdapter.setDataLoading(false);
+//                allCustomAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void failedToRetrieve(DatabaseError var1) {
-
+                allCustomAdapter.setDataLoading(false);
             }
         });
-        return view;
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-
-        }
     }
 }

@@ -29,7 +29,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class TodayAttendanceActivity extends AppCompatActivity {
     ArrayList<AttendanceModel> attendanceModelArray = new ArrayList<AttendanceModel>();
     ListView listView;
-    private static AttendanceAdapter attendanceAdapter;
+    private AttendanceAdapter attendanceAdapter;
     private Button attendanceButton;
     private boolean attendanceButtonSelected;
     //private SearchView mSearchView;

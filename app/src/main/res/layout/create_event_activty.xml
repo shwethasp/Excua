@@ -40,7 +40,6 @@
                     android:layout_height="20dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
                     android:text="Save"
                     android:textAllCaps="false"
                     android:background="#00000000"

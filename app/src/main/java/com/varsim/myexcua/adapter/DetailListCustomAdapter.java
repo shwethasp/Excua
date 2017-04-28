@@ -71,7 +71,7 @@ public class DetailListCustomAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mEventsList.size();
+        return mEventsList == null ? 0 : mEventsList.size();
     }
 
     @Override
@@ -126,4 +126,11 @@ public class DetailListCustomAdapter extends BaseAdapter {
         return row;
     }
 
+    public ArrayList<Event> getmEventsList() {
+        return mEventsList;
+    }
+
+    public void setmEventsList(ArrayList<Event> mEventsList) {
+        this.mEventsList = mEventsList;
+    }
 }

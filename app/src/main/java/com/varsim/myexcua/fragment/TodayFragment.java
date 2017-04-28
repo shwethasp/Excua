@@ -42,11 +42,29 @@ public class TodayFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_today, container, false);
+
+        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        mRecyclerView.setHasFixedSize(false);
+
+        todayCustomAdapter = new TodayCustomAdapter(getActivity(), eventArrayList, new Date());
+        mRecyclerView.setAdapter(todayCustomAdapter);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        todayCustomAdapter.setDataLoading(true);
         FireDBManager.getInstance().getEventsForDate(new Date(), new FireDBManager.EventsRetrivevalCompletion() {
             @Override
             public void successfullyRetrievedEventsForDate(ArrayList<Event> eventsList) {
                 eventArrayList = eventsList;
                 todayCustomAdapter.setEventArrayList(eventArrayList);
+                todayCustomAdapter.setDataLoading(false);
                 todayCustomAdapter.populateListView();
                 todayCustomAdapter.notifyDataSetChanged();
             }
@@ -58,21 +76,8 @@ public class TodayFragment extends Fragment {
 
             @Override
             public void failedToRetrieve(DatabaseError var1) {
-
+                todayCustomAdapter.setDataLoading(false);
             }
         });
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_today, container, false);
-
-        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        mRecyclerView.setHasFixedSize(false);
-
-        todayCustomAdapter = new TodayCustomAdapter(getActivity(), mDatasetTypes, eventArrayList, new Date());
-        mRecyclerView.setAdapter(todayCustomAdapter);
-
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        return view;
     }
 }

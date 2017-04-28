@@ -29,7 +29,6 @@ public class TomorrowFragment extends Fragment {
     private ProgressDialog authDialog;
     private static final String TAG = TodayFragment.class.getCanonicalName();
     TodayCustomAdapter todayCustomAdapter;
-    private int mDatasetTypes[] = {TodayLocation, TodayDetails};
     private ArrayList<Event> eventArrayList = new ArrayList<>();
 
     public TomorrowFragment() {
@@ -39,32 +38,13 @@ public class TomorrowFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        FireDBManager.getInstance().getEventsForDate(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000), new FireDBManager.EventsRetrivevalCompletion() {
-            @Override
-            public void successfullyRetrievedEventsForDate(ArrayList<Event> eventsList) {
-                eventArrayList = eventsList;
-                todayCustomAdapter.setEventArrayList(eventArrayList);
-                todayCustomAdapter.populateListView();
-                todayCustomAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void successfullyRetrievedEventsForUser(Map<Date, ArrayList<Event>> eventsMap) {
-
-            }
-
-            @Override
-            public void failedToRetrieve(DatabaseError var1) {
-
-            }
-        });
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_today, container, false);
 
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(false);
 
-        todayCustomAdapter = new TodayCustomAdapter(getActivity(), mDatasetTypes, eventArrayList, new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000));
+        todayCustomAdapter = new TodayCustomAdapter(getActivity(), eventArrayList, new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000));
         mRecyclerView.setAdapter(todayCustomAdapter);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -72,4 +52,30 @@ public class TomorrowFragment extends Fragment {
 
         return view;
     }
+
+  @Override
+  public void onStart() {
+    super.onStart();
+    todayCustomAdapter.setDataLoading(true);
+    FireDBManager.getInstance().getEventsForDate(new Date(), new FireDBManager.EventsRetrivevalCompletion() {
+      @Override
+      public void successfullyRetrievedEventsForDate(ArrayList<Event> eventsList) {
+        eventArrayList = eventsList;
+        todayCustomAdapter.setEventArrayList(eventArrayList);
+        todayCustomAdapter.setDataLoading(false);
+        todayCustomAdapter.populateListView();
+        todayCustomAdapter.notifyDataSetChanged();
+      }
+
+      @Override
+      public void successfullyRetrievedEventsForUser(Map<Date, ArrayList<Event>> eventsMap) {
+
+      }
+
+      @Override
+      public void failedToRetrieve(DatabaseError var1) {
+        todayCustomAdapter.setDataLoading(false);
+      }
+    });
+  }
 }

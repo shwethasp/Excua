@@ -12,7 +12,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.varsim.myexcua.R;
-import com.varsim.myexcua.fragment.TodayFragment;
 import com.varsim.myexcua.model.Event;
 
 import java.text.DateFormatSymbols;
@@ -26,137 +25,160 @@ import java.util.Date;
 
 public class TodayCustomAdapter extends RecyclerView.Adapter<TodayCustomAdapter.ViewHolder> {
 
-    private Context mContext;
-    DetailListCustomAdapter detailListCustomAdapter;
+  private Context mContext;
+  private ListView mListView;
+  private ArrayList<Event> eventArrayList;
+  private Date dateToSet;
 
-    private ListView mListView;
+  private boolean isDataLoading = true;
 
-    int[] mDatasetTypes;
-    private ArrayList<Event> eventArrayList;
+  private final int VIEW_TYPE_LOCATION = 0;
+  private final int VIEW_TYPE_LOADING = 1;
+  private final int VIEW_TYPE_EVENTS = 2;
 
-    private Date dateToSet;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public ViewHolder(View v) {
-            super(v);
+  public static class ViewHolder extends RecyclerView.ViewHolder {
+    public ViewHolder(View v) {
+      super(v);
+    }
+  }
+
+  private class TodayLocationsViewHolder extends ViewHolder {
+    TextView day_text, date_text;
+    ProgressBar mProgressBar;
+
+    public TodayLocationsViewHolder(View v) {
+      super(v);
+
+      this.date_text = (TextView) v.findViewById(R.id.date_text);
+      this.day_text = (TextView) v.findViewById(R.id.day_text);
+    }
+  }
+
+  private class TodayDetailsViewHolder extends ViewHolder {
+    public TodayDetailsViewHolder(View v) {
+      super(v);
+      mListView = (ListView) v.findViewById(R.id.details_listview);
+      DetailListCustomAdapter detailListCustomAdapter = new DetailListCustomAdapter(mContext, eventArrayList);
+      mListView.setAdapter(detailListCustomAdapter);
+      mListView.setFocusable(false);
+
+      mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+          //mListener.onItemSelected(mSettingsListArray[i], i);
         }
+      });
+      TodayCustomAdapter.this.setListViewHeightBasedOnChildren(mListView);
+    }
+  }
+
+  private class LoadingViewHolder extends ViewHolder {
+    public ProgressBar progressBar;
+    public LoadingViewHolder(View itemView) {
+      super(itemView);
+      progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar1);
+    }
+  }
+
+  //constructor
+  public TodayCustomAdapter(Context mContexts, ArrayList<Event> eventArrayList, Date dateToSet) {
+    this.mContext = mContexts;
+    this.eventArrayList = eventArrayList;
+    this.dateToSet = dateToSet;
+  }
+
+  @Override
+  public int getItemCount() {
+    return 2;
+  }
+
+  @Override
+  public int getItemViewType(int position) {
+    if (position == 0) {
+      return VIEW_TYPE_LOCATION;
+    }
+    return isDataLoading ? VIEW_TYPE_LOADING : VIEW_TYPE_EVENTS;
+  }
+
+  @Override
+  public TodayCustomAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    View v;
+
+    if (viewType == VIEW_TYPE_LOCATION) {
+      v = LayoutInflater.from(parent.getContext())
+              .inflate(R.layout.today_location_card, parent, false);
+      return new TodayLocationsViewHolder(v);
+    } else if (viewType == VIEW_TYPE_EVENTS) {
+      v = LayoutInflater.from(parent.getContext())
+              .inflate(R.layout.today_details_card, parent, false);
+      return new TodayDetailsViewHolder(v);
+    } else if (viewType == VIEW_TYPE_LOADING) {
+      v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_loading_item, parent,  false);
+      return new LoadingViewHolder(v);
+    } else {
+      return null;
+    }
+  }
+
+  @Override
+  public void onBindViewHolder(TodayCustomAdapter.ViewHolder holder, int position) {
+
+    //    if (Connectivity.isConnected(mContext)) {
+    if (holder.getItemViewType() == VIEW_TYPE_LOCATION) {
+
+      final TodayLocationsViewHolder viewholder = (TodayLocationsViewHolder) holder;
+      SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM,yyyy");
+      String dateString = simpleDateFormat.format(this.dateToSet);
+      viewholder.date_text.setText(dateString);
+      simpleDateFormat.applyPattern("EEEE");
+      String weekday = simpleDateFormat.format(this.dateToSet);
+      viewholder.day_text.setText(weekday);
+    } else if (holder.getItemViewType() == VIEW_TYPE_LOCATION) {
+      TodayDetailsViewHolder viewholder = (TodayDetailsViewHolder) holder;
+    }
+  }
+
+  public void populateListView() {
+
+    // Create custom adapter object ( see below CustomAdapter.java )
+  }
+
+  public static void setListViewHeightBasedOnChildren(ListView listView) {
+    ListAdapter listAdapter = listView.getAdapter();
+    if (listAdapter == null) {
+      // pre-condition
+      return;
     }
 
-    public class TodayLocationsViewHolder extends ViewHolder {
-        TextView day_text, date_text;
-        ProgressBar mProgressBar;
-
-        public TodayLocationsViewHolder(View v) {
-            super(v);
-
-            this.date_text = (TextView) v.findViewById(R.id.date_text);
-            this.day_text = (TextView) v.findViewById(R.id.day_text);
-        }
+    int totalHeight = 0;
+    for (int i = 0; i < listAdapter.getCount(); i++) {
+      View listItem = listAdapter.getView(i, null, listView);
+      listItem.measure(0, 0);
+      totalHeight += listItem.getMeasuredHeight();
     }
 
-    public class TodayDetailsViewHolder extends ViewHolder {
-        public TodayDetailsViewHolder(View v) {
-            super(v);
-            mListView = (ListView) v.findViewById(R.id.details_listview);
-        }
-    }
+    ViewGroup.LayoutParams params = listView.getLayoutParams();
+    params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+    listView.setLayoutParams(params);
+  }
 
-    //constructor
-    public TodayCustomAdapter(Context mContexts, int mDatasetTypes[], ArrayList<Event> eventArrayList, Date dateToSet) {
-        this.mContext = mContexts;
-        this.mDatasetTypes = mDatasetTypes;
-        this.eventArrayList = eventArrayList;
-        this.dateToSet = dateToSet;
-    }
+  String getMonthName(int monthNumber) {
+    String[] months = new DateFormatSymbols().getMonths();
+    int n = monthNumber - 1;
+    return (n >= 0 && n <= 11) ? months[n] : "wrong number";
+  }
 
-    @Override
-    public TodayCustomAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v;
+  public void setEventArrayList(ArrayList<Event> eventArrayList) {
+    this.eventArrayList = eventArrayList;
+  }
 
-        if (viewType == TodayFragment.TodayLocation) {
-            v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.today_location_card, parent, false);
-            return new TodayLocationsViewHolder(v);
+  public boolean isDataLoading() {
+    return isDataLoading;
+  }
 
-        } else if (viewType == TodayFragment.TodayDetails) {
-            v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.today_details_card, parent, false);
-            return new TodayDetailsViewHolder(v);
-        } else {
-            return null;
-        }
-    }
-
-    @Override
-    public void onBindViewHolder(TodayCustomAdapter.ViewHolder holder, int position) {
-
-        //    if (Connectivity.isConnected(mContext)) {
-        if (holder.getItemViewType() == TodayFragment.TodayLocation) {
-
-            final TodayLocationsViewHolder viewholder = (TodayLocationsViewHolder) holder;
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM,yyyy");
-            String dateString = simpleDateFormat.format(this.dateToSet);
-            viewholder.date_text.setText(dateString);
-            simpleDateFormat.applyPattern("EEEE");
-            String weekday = simpleDateFormat.format(this.dateToSet);
-            viewholder.day_text.setText(weekday);
-        } else if (holder.getItemViewType() == TodayFragment.TodayDetails) {
-            TodayDetailsViewHolder viewholder = (TodayDetailsViewHolder) holder;
-        }
-    }
-
-    public void populateListView() {
-
-        // Create custom adapter object ( see below CustomAdapter.java )
-        detailListCustomAdapter = new DetailListCustomAdapter(mContext, eventArrayList);
-        mListView.setAdapter(detailListCustomAdapter);
-        mListView.setFocusable(false);
-
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //mListener.onItemSelected(mSettingsListArray[i], i);
-            }
-        });
-        setListViewHeightBasedOnChildren(mListView);
-    }
-
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null) {
-            // pre-condition
-            return;
-        }
-
-        int totalHeight = 0;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            View listItem = listAdapter.getView(i, null, listView);
-            listItem.measure(0, 0);
-            totalHeight += listItem.getMeasuredHeight();
-        }
-
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        listView.setLayoutParams(params);
-    }
-
-    String getMonthName(int monthNumber) {
-        String[] months = new DateFormatSymbols().getMonths();
-        int n = monthNumber - 1;
-        return (n >= 0 && n <= 11) ? months[n] : "wrong number";
-    }
-
-    @Override
-    public int getItemCount() {
-        return mDatasetTypes.length;
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return mDatasetTypes[position];
-    }
-
-    public void setEventArrayList(ArrayList<Event> eventArrayList) {
-        this.eventArrayList = eventArrayList;
-    }
+  public void setDataLoading(boolean dataLoading) {
+    isDataLoading = dataLoading;
+    this.notifyItemChanged(1);
+  }
 }
