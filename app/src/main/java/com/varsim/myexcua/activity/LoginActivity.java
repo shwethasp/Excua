@@ -25,13 +25,8 @@ import com.google.firebase.database.DatabaseError;
 import com.varsim.myexcua.R;
 import com.varsim.myexcua.library.Library;
 import com.varsim.myexcua.model.CurrentUser;
-import com.varsim.myexcua.model.Event;
 import com.varsim.myexcua.model.FireDBManager;
 import com.varsim.myexcua.model.User;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -56,6 +51,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         initializeui();
 
         mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setCanceledOnTouchOutside(false);
 
         mLoginButton.setOnClickListener(this);
         mAuth = FirebaseAuth.getInstance();
@@ -199,29 +195,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         currentUser.setRole("Trainer");
         currentUser.setPhoneNumber("999999");
         currentUser.saveUser();
-    }
-
-    private void createAnEvent(String userID) {
-        Event event = new Event(userID);
-        event.setEventStartDate(new Date());
-        event.setEventType("Swimming");
-        event.setEventEndDate(new Date(System.currentTimeMillis() + 60 * 60 * 1000));
-//        event.createEvent();
-
-        Event event2 = new Event(userID);
-        event2.setEventStartDate(new Date(System.currentTimeMillis() + 23 * 60 * 60 * 1000));
-        event2.setEventType("Swimming");
-        event2.setEventEndDate(new Date(System.currentTimeMillis() + 60 * 60 * 1000));
-//        event2.createEvent();
-    }
-    private Date dateForString(String dateString) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd:HH:mm");
-        try {
-            return simpleDateFormat.parse(dateString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
 }

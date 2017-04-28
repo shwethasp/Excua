@@ -1,7 +1,6 @@
 package com.varsim.myexcua.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.varsim.myexcua.R;
-import com.varsim.myexcua.activity.TodayAttendanceActivity;
 import com.varsim.myexcua.model.Event;
 
 import java.text.SimpleDateFormat;
@@ -35,7 +33,9 @@ public class AllCustomAdapter extends RecyclerView.Adapter<AllCustomAdapter.View
 
     private final int VIEW_TYPE_LOADING = 0;
     private final int VIEW_TYPE_EVENTS = 1;
+    private final int VIEW_TYPE_DATE = 2;
 
+    ArrayList<Object> listOfAllItemModels;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(View v) {
@@ -51,22 +51,40 @@ public class AllCustomAdapter extends RecyclerView.Adapter<AllCustomAdapter.View
         }
     }
 
-    public class AllViewHolder extends AllCustomAdapter.ViewHolder {
+    private class DateViewHolder extends ViewHolder {
+        TextView weekdayTetView;
+        TextView dateTextView;
+        public DateViewHolder(View v) {
+            super(v);
+            weekdayTetView = (TextView) v.findViewById(R.id.day_text);
+            dateTextView = (TextView) v.findViewById(R.id.date_text);
+        }
+    }
+
+    private class EventListItemViewHolder extends ViewHolder{
+        ImageView sportTypeImageView;
+        TextView apartmentNameTextView, startTimeTextView, endTimeTextView, countTextView;
+        public EventListItemViewHolder(View v) {
+            super(v);
+            sportTypeImageView = (ImageView) v.findViewById(R.id.sport_type_image);
+            apartmentNameTextView = (TextView) v.findViewById(R.id.apartment_name_text);
+            startTimeTextView = (TextView) v.findViewById(R.id.start_time_textview);
+            endTimeTextView = (TextView) v.findViewById(R.id.end_time_textview);
+            countTextView = (TextView) v.findViewById(R.id.count_textview);
+        }
+    }
+
+    private class AllViewHolder extends AllCustomAdapter.ViewHolder {
         //  TextView day_text, date_text;
         LinearLayout mAllDateRangeDynamicLayout, mAllListActivitiesDynamicLayout;
 
         public AllViewHolder(View v) {
             super(v);
-
             this.mAllDateRangeDynamicLayout = (LinearLayout) v.findViewById(R.id.all_daterange_dynamic_layout);
             mAllListActivitiesDynamicLayout = (LinearLayout) v.findViewById(R.id.all_listactivities_dyanamic_layout);
-
         }
     }
 
-    /*************
-     * Constructor
-     *****************/
     public AllCustomAdapter(Context applicationContext, ArrayList<Date> dateArrayList, Map<Date, ArrayList<Event>> allEventsMap) {
         this.mContext = applicationContext;
         this.allEventsMap = allEventsMap;
@@ -77,28 +95,56 @@ public class AllCustomAdapter extends RecyclerView.Adapter<AllCustomAdapter.View
 
     @Override
     public int getItemCount() {
-        if (dateArrayList.size() == 0 && !isDataLoading){
+        if (isDataLoading) {
+            return 1;
+        }
+        if (dateArrayList == null) {
             return 0;
-        };
-        return 1;
+        }
+        if (dateArrayList.size() == 0) {
+            return 0;
+        }
+        if (listOfAllItemModels == null) {
+            listOfAllItemModels = new ArrayList<Object>();
+        }else {
+            listOfAllItemModels.clear();
+        }
+        int noOfAllEvents = 0;
+        for (Date date : dateArrayList) {
+            listOfAllItemModels.add(date);
+            ArrayList<Event> eventsOnDate = allEventsMap.get(date);
+            for(Event anEvent : eventsOnDate) {
+                listOfAllItemModels.add(anEvent);
+            }
+        }
+        return listOfAllItemModels.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        return isDataLoading ? VIEW_TYPE_LOADING : VIEW_TYPE_EVENTS;
+        if (isDataLoading) {
+            return VIEW_TYPE_LOADING;
+        }
+        if (listOfAllItemModels.get(position) instanceof Date) {
+            return VIEW_TYPE_DATE;
+        }
+        return VIEW_TYPE_EVENTS;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v;
-
         if (viewType == VIEW_TYPE_EVENTS) {
             v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.all_dynamic_layouts, parent, false);
-            return new AllCustomAdapter.AllViewHolder(v);
+                    .inflate(R.layout.all_listactivities_dyanamic, parent, false);
+            return new EventListItemViewHolder(v);
         } else if (viewType == VIEW_TYPE_LOADING) {
-            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_loading_item, parent,  false);
+            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_loading_item, parent, false);
             return new LoadingViewHolder(v);
+        }else if (viewType == VIEW_TYPE_DATE) {
+            v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.all_daterange_dynamic, parent, false);
+            return new AllCustomAdapter.DateViewHolder(v);
         } else {
             return null;
         }
@@ -107,64 +153,25 @@ public class AllCustomAdapter extends RecyclerView.Adapter<AllCustomAdapter.View
     public void onBindViewHolder(AllCustomAdapter.ViewHolder holder, int position) {
 
         //    if (Connectivity.isConnected(mContext)) {
-        if (holder.getItemViewType() == VIEW_TYPE_EVENTS) {
-            final AllCustomAdapter.AllViewHolder viewholder = (AllCustomAdapter.AllViewHolder) holder;
+        if (holder.getItemViewType() == VIEW_TYPE_DATE) {
+            Date date = (Date) listOfAllItemModels.get(position);
 
-            for (int j = 0; j < dateArrayList.size(); j++) {
-                LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(
-                        Context.LAYOUT_INFLATER_SERVICE);
-                View dynamicDateview = mInflater.inflate(R.layout.all_daterange_dynamic, null,
-                        false);
-                simpleDateFormat.applyPattern("dd MMM,yyyy");
-                String dateString = simpleDateFormat.format(dateArrayList.get(j));
-                simpleDateFormat.applyPattern("EEEE");
-                String weekday = simpleDateFormat.format(dateArrayList.get(j));
+            final DateViewHolder dateViewHolder = (DateViewHolder) holder;
+            simpleDateFormat.applyPattern("dd MMM,yyyy");
+            dateViewHolder.dateTextView.setText(simpleDateFormat.format(date));
+            simpleDateFormat.applyPattern("EEEE");
+            dateViewHolder.weekdayTetView.setText(simpleDateFormat.format(date));
 
-                int noOfActivities = 15;
+        } else if (holder.getItemViewType() == VIEW_TYPE_EVENTS) {
+            Event event = (Event) listOfAllItemModels.get(position);
+            simpleDateFormat.applyPattern("hh:mm a");
 
-                TextView date_text = (TextView) dynamicDateview.findViewById(R.id.date_text);
-                TextView day_texts = (TextView) dynamicDateview.findViewById(R.id.day_text);
-                day_texts.setText(weekday);
-                date_text.setText(dateString);
-
-                if (dynamicDateview.getParent() != null)
-                    ((ViewGroup) dynamicDateview.getParent()).removeView(dynamicDateview);
-                viewholder.mAllDateRangeDynamicLayout.addView(dynamicDateview);
-
-                ArrayList<Event> eventsList = allEventsMap.get(dateArrayList.get(j));
-                for (int k = 0; k < eventsList.size(); k++) {
-                    final View dynamicActivityview = mInflater.inflate(R.layout.all_listactivities_dyanamic, null,
-                            false);
-                    ImageView sport_type_image = (ImageView) dynamicActivityview.findViewById(R.id.sport_type_image);
-                    TextView apartment_name_text = (TextView) dynamicActivityview.findViewById(R.id.apartment_name_text);
-                    TextView start_time_textview = (TextView) dynamicActivityview.findViewById(R.id.start_time_textview);
-                    TextView end_time_textview = (TextView) dynamicActivityview.findViewById(R.id.end_time_textview);
-                    TextView count_textview = (TextView) dynamicActivityview.findViewById(R.id.count_textview);
-                    TextView nextarrow_imageview = (TextView) dynamicActivityview.findViewById(R.id.nextarrow_imageview);
-
-                    Event event = eventsList.get(k);
-                    simpleDateFormat.applyPattern("hh:mm a");
-
-                    sport_type_image.setImageResource(R.mipmap.ic_swim);
-                    apartment_name_text.setText("ITPL");
-                    start_time_textview.setText(simpleDateFormat.format(event.getEventStartDate()));
-                    end_time_textview.setText(simpleDateFormat.format(event.getEventEndDate()));
-                    count_textview.setText("" + noOfActivities);
-                    nextarrow_imageview.setText(">");
-
-                    if (dynamicActivityview.getParent() != null)
-                        ((ViewGroup) dynamicActivityview.getParent()).removeView(dynamicActivityview);
-
-                    viewholder.mAllDateRangeDynamicLayout.addView(dynamicActivityview);
-                    dynamicActivityview.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent i = new Intent(mContext, TodayAttendanceActivity.class);
-                            mContext.startActivity(i);
-                        }
-                    });
-                }
-            }
+            final EventListItemViewHolder eventItemHolder = (EventListItemViewHolder) holder;
+            eventItemHolder.sportTypeImageView.setImageResource(R.mipmap.ic_swim);
+            eventItemHolder.apartmentNameTextView.setText("ITPL");
+            eventItemHolder.startTimeTextView.setText(simpleDateFormat.format(event.getEventStartDate()));
+            eventItemHolder.endTimeTextView.setText(simpleDateFormat.format(event.getEventEndDate()));
+            eventItemHolder.countTextView.setText("" + 15);
         }
     }
 
